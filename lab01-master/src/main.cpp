@@ -21,6 +21,19 @@ int main(int argc, char **argv)
 	int width = atoi(argv[2]);
 	// Height of image
 	int height = atoi(argv[3]);
+	
+	// Vertex 1 x-coord (e.g., 100)
+	int x1 = atoi(argv[4]);
+	// Vertex 1 y-coord (e.g., 100)
+	int y1 = atoi(argv[5]);
+
+	// rest of the coordinates for the triangle
+	int x2 = atoi(argv[6]);
+	int y2 = atoi(argv[7]);
+	int x3 = atoi(argv[8]);
+	int y3 = atoi(argv[9]);
+	
+
 	// Create the image. We're using a `shared_ptr`, a C++11 feature.
 	auto image = make_shared<Image>(width, height);
 	// Draw a rectangle
