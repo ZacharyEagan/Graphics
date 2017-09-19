@@ -2,7 +2,10 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <algorithm>
+
 #include "Image.h"
+
 
 // This allows you to skip the `std::` in front of C++ standard library
 // functions. You can also say `using std::cout` to be more selective.
@@ -49,7 +52,26 @@ void my_triangle::draw(shared_ptr<Image> img)
 	_c.draw(img);
 }
 
+class my_triBox
+{
+public:
+	my_triBox(int maxX, int minX, int maxY, int minY);
+	void draw(shared_ptr<Image> img);
+private:
+	int _t, _b, _l, _r;
+};
 
+my_triBox::my_triBox(int maxX, int minX, int maxY, int minY) : _t(maxY), _b(minY), _r(maxY), _l(minY) {}
+void my_triBox::draw(shared_ptr<Image> img)
+{
+	for (int i = _b; i <= _t; i++)
+	{
+		for (int j = _l; j <= _r; j++)
+		{
+			img->setPixel(j, i, i % 255, j % 255, (i + j) % 255);
+		}
+	}
+}
 
 int main(int argc, char **argv)
 {
@@ -64,22 +86,28 @@ int main(int argc, char **argv)
 	// Height of image
 	int height = atoi(argv[3]);
 	
+
+	int x[3];
+	int y[3];
+
 	// Vertex 1 x-coord (e.g., 100)
-	int x1 = atoi(argv[4]);
+	x[0] = atoi(argv[4]);
 	// Vertex 1 y-coord (e.g., 100)
-	int y1 = atoi(argv[5]);
+	y[0] = atoi(argv[5]);
 
 	// rest of the coordinates for the triangle
-	int x2 = atoi(argv[6]);
-	int y2 = atoi(argv[7]);
-	int x3 = atoi(argv[8]);
-	int y3 = atoi(argv[9]);
+	x[1] = atoi(argv[6]);
+	y[1] = atoi(argv[7]);
+    x[2] = atoi(argv[8]);
+	y[2] = atoi(argv[9]);
 	
-	my_pixel a(x1, y2);
-	my_pixel b(x2, y2);
-	my_pixel c(x3, y3);
+	my_pixel a(x[0], y[0]);
+	my_pixel b(x[1], y[1]);
+	my_pixel c(x[2], y[2]);
 
 	my_triangle tri(a, b, c);
+	my_triBox box(*max_element(x, x + 3), *min_element(x, x + 3), *max_element(y, y + 3), *min_element(y, y + 3));
+	
 
 	// Create the image. We're using a `shared_ptr`, a C++11 feature.
 	auto image = make_shared<Image>(width, height);
@@ -93,6 +121,8 @@ int main(int argc, char **argv)
 		}
 	}
 
+
+	box.draw(image);
 	tri.draw(image);
 	
 
