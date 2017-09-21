@@ -4,6 +4,7 @@
 #include <memory>
 #include <algorithm>
 
+
 #include "Image.h"
 
 
@@ -61,7 +62,7 @@ private:
 	int _t, _b, _l, _r;
 };
 
-my_triBox::my_triBox(int maxX, int minX, int maxY, int minY) : _t(maxY), _b(minY), _r(maxY), _l(minY) {}
+my_triBox::my_triBox(int maxX, int minX, int maxY, int minY) : _t(maxY), _b(minY), _r(maxX), _l(minX) {}
 void my_triBox::draw(shared_ptr<Image> img)
 {
 	for (int i = _b; i <= _t; i++)
@@ -75,6 +76,7 @@ void my_triBox::draw(shared_ptr<Image> img)
 
 int main(int argc, char **argv)
 {
+
 	if(argc < 4) {
 		cout << "Usage: Lab1 <out_image_name>.png width height" << endl;
 		return 0;
@@ -101,13 +103,22 @@ int main(int argc, char **argv)
     x[2] = atoi(argv[8]);
 	y[2] = atoi(argv[9]);
 	
+	
+	
+
+	
 	my_pixel a(x[0], y[0]);
 	my_pixel b(x[1], y[1]);
 	my_pixel c(x[2], y[2]);
-
+	
+	/*
+	my_pixel a(1, 1);
+	my_pixel b(50, 50);
+	my_pixel c(1, 50);
+	*/
 	my_triangle tri(a, b, c);
 	my_triBox box(*max_element(x, x + 3), *min_element(x, x + 3), *max_element(y, y + 3), *min_element(y, y + 3));
-	
+
 
 	// Create the image. We're using a `shared_ptr`, a C++11 feature.
 	auto image = make_shared<Image>(width, height);
