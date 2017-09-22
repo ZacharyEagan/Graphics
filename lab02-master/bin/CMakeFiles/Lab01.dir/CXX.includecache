@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/zeagan/Desktop/Graphics/lab02-master/src/Image.h
+string
+-
+vector
+-
+
+/home/zeagan/Desktop/Graphics/lab02-master/src/main.cpp
+iostream
+-
+string
+-
+vector
+-
+memory
+-
+algorithm
+-
+Image.h
+/home/zeagan/Desktop/Graphics/lab02-master/src/Image.h
+

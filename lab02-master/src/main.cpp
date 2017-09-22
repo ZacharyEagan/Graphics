@@ -59,7 +59,7 @@ public:
 	my_triBox(int maxX, int minX, int maxY, int minY);
 	void draw(shared_ptr<Image> img);
 private:
-	int _t, _b, _l, _r;
+	int _t, _b, _r, _l;
 };
 
 my_triBox::my_triBox(int maxX, int minX, int maxY, int minY) : _t(maxY), _b(minY), _r(maxX), _l(minX) {}
@@ -77,8 +77,8 @@ void my_triBox::draw(shared_ptr<Image> img)
 int main(int argc, char **argv)
 {
 
-	if(argc < 4) {
-		cout << "Usage: Lab1 <out_image_name>.png width height" << endl;
+	if(argc < 19) {
+		cout << "Usage: Lab1 <out_image_name>.png width height : num = " << argc << endl;
 		return 0;
 	}
 	// Output filename
@@ -96,20 +96,21 @@ int main(int argc, char **argv)
 	x[0] = atoi(argv[4]);
 	// Vertex 1 y-coord (e.g., 100)
 	y[0] = atoi(argv[5]);
-
-	// rest of the coordinates for the triangle
-	x[1] = atoi(argv[6]);
-	y[1] = atoi(argv[7]);
-    x[2] = atoi(argv[8]);
-	y[2] = atoi(argv[9]);
+	my_pixel a(x[0], y[0], atoi(argv[6]), atoi(argv[7]), atoi(argv[8]));
 	
-	
+	x[1] = atoi(argv[9]);
+	y[1] = atoi(argv[10]);
+	my_pixel b(x[1], y[1], atoi(argv[11]), atoi(argv[12]), atoi(argv[13]));
 	
 
+	x[2] = atoi(argv[14]);
+	y[2] = atoi(argv[15]);
+	my_pixel c(x[2], y[2], atoi(argv[16]), atoi(argv[17]), atoi(argv[18]));
+   	
 	
-	my_pixel a(x[0], y[0]);
-	my_pixel b(x[1], y[1]);
-	my_pixel c(x[2], y[2]);
+
+	
+
 	
 	/*
 	my_pixel a(1, 1);
@@ -122,18 +123,9 @@ int main(int argc, char **argv)
 
 	// Create the image. We're using a `shared_ptr`, a C++11 feature.
 	auto image = make_shared<Image>(width, height);
-	// Draw a rectangle
-	for(int y = 10; y < 20; ++y) {
-		for(int x = 20; x < 40; ++x) {
-			unsigned char r = 255;
-			unsigned char g = 0;
-			unsigned char b = 0;
-			image->setPixel(x, y, r, g, b);
-		}
-	}
 
 
-	box.draw(image);
+	//box.draw(image);
 	tri.draw(image);
 	
 
