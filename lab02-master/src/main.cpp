@@ -35,6 +35,8 @@ void my_pixel::draw(shared_ptr<Image> img)
 }
 
 
+
+
 //////////////////////////
 class my_triangle
 {
