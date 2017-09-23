@@ -22,16 +22,38 @@ class my_pixel
 public:
 	my_pixel(int x = 0, int y = 0, int z = 0, int r = 255, int g = 255, int b = 255);
 	void draw(shared_ptr<Image> img);
+   std::vector<int> get_point();
+   std::vector<int> get_color();
 private:
 	int _x, _y, _z;
 	int _r, _g, _b;
 	
 };
 
-my_pixel::my_pixel(int x, int y, int z, int r, int g, int b) : _x(x), _y(y), _z(z), _r(r), _g(g), _b(b) {}
+my_pixel::my_pixel(int x, int y, int z, int r, int g, int b) : _x(x), _y(y), _z(z), _r(r), _g(g), _b(b) 
+{
+}
 void my_pixel::draw(shared_ptr<Image> img)
 {
 	img->setPixel(_x, _y, _r, _g, _b);
+}
+std::vector<int> my_pixel::get_point()
+{
+   std::vector<int> pix;
+   pix.push_back(_x);
+   pix.push_back(_y);
+   pix.push_back(_z);
+   
+   return pix;
+}
+std::vector<int> my_pixel::get_color()
+{
+   std::vector<int> pix;
+   pix.push_back(_r);
+   pix.push_back(_g);
+   pix.push_back(_b);
+
+   return pix;
 }
 
 
@@ -43,38 +65,52 @@ class my_triangle
 public:
 	my_triangle(my_pixel a, my_pixel b, my_pixel c);
 	void draw(shared_ptr<Image> img);
+   void draw_box(shared_ptr<Image> img);
+   
 private:
 	my_pixel _a, _b, _c;
+   int _left, _right, _top, _bottom;
 };
 
-my_triangle::my_triangle(my_pixel a, my_pixel b, my_pixel c) : _a(a), _b(b), _c(c) {}
+my_triangle::my_triangle(my_pixel a, my_pixel b, my_pixel c) : _a(a), _b(b), _c(c) 
+{
+   vector<int> temp;
+   int x[3], y[3];
+   
+   temp = _a.get_point();
+   x[0] = temp.at(0);
+   y[0] = temp.at(0);
+
+   temp = _b.get_point();
+   x[1] = temp.at(0);
+   y[1] = temp.at(0);
+   
+   temp = _c.get_point();
+   x[2] = temp.at(0);
+   y[2] = temp.at(0);
+   
+   _right = *max_element(x, x + 3);
+   _left = *min_element(x, x + 3);
+   _top = *max_element(y, y + 3);
+   _bottom = *min_element(y, y + 3);
+}
 void my_triangle::draw(shared_ptr<Image> img)
 {
 	_a.draw(img);
 	_b.draw(img);
 	_c.draw(img);
 }
-
-class my_triBox
+void my_triangle::draw_box(shared_ptr<Image> img)
 {
-public:
-	my_triBox(int maxX, int minX, int maxY, int minY);
-	void draw(shared_ptr<Image> img);
-private:
-	int _t, _b, _r, _l;
-};
-
-my_triBox::my_triBox(int maxX, int minX, int maxY, int minY) : _t(maxY), _b(minY), _r(maxX), _l(minX) {}
-void my_triBox::draw(shared_ptr<Image> img)
-{
-	for (int i = _b; i <= _t; i++)
+	for (int i = _bottom; i <= _top; i++)
 	{
-		for (int j = _l; j <= _r; j++)
+		for (int j = _left; j <= _right; j++)
 		{
 			img->setPixel(j, i, i % 255, j % 255, (i + j) % 255);
 		}
 	}
 }
+
 
 int main(int argc, char **argv)
 {
@@ -120,7 +156,6 @@ int main(int argc, char **argv)
 	my_pixel c(1, 50);
 	*/
 	my_triangle tri(a, b, c);
-	my_triBox box(*max_element(x, x + 3), *min_element(x, x + 3), *max_element(y, y + 3), *min_element(y, y + 3));
 
 
 	// Create the image. We're using a `shared_ptr`, a C++11 feature.
@@ -128,7 +163,8 @@ int main(int argc, char **argv)
 
 
 	//box.draw(image);
-	tri.draw(image);
+	tri.draw_box(image);
+   tri.draw(image);
 	
 
 	// Write image to file
