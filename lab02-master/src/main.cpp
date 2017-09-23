@@ -66,6 +66,13 @@ public:
 	my_triangle(my_pixel a, my_pixel b, my_pixel c);
 	void draw(shared_ptr<Image> img);
    void draw_box(shared_ptr<Image> img);
+   void draw_fill(shared_ptr<Image> img);
+
+   double get_area();
+   double get_area_b(int x, int y);
+   double get_area_c(int x, int y);
+   double get_area_a(int x, int y);
+   bool is_in(int x, int y);
    
 private:
 	my_pixel _a, _b, _c;
@@ -110,7 +117,102 @@ void my_triangle::draw_box(shared_ptr<Image> img)
 		}
 	}
 }
+void my_triangle::draw_fill(shared_ptr<Image> img)
+{
+	for (int i = _bottom; i <= _top; i++)
+	{
+		for (int j = _left; j <= _right; j++)
+		{
+         if (is_in(j,i))
+   			img->setPixel(j, i, 255,255,255);
+		}
+	}
+}
 
+double my_triangle::get_area()
+{
+   vector<int> a = _a.get_point();
+   vector<int> b = _b.get_point();
+   vector<int> c = _c.get_point();
+
+   double temp1;
+   double temp2;
+
+   temp1 = 0.50 * (b.at(0) - a.at(0));
+   temp1 *= (c.at(1) - a.at(1));
+   temp2 = 0.50 * (c.at(0) - a.at(0));
+   temp2 *= (b.at(1) - a.at(1));
+   return temp1 + temp2;
+}
+
+double my_triangle::get_area_b(int x, int y)
+{
+   vector<int> a = _a.get_point();
+   vector<int> c = _c.get_point();
+
+   double temp1;
+   double temp2;
+  
+   temp1 =  (a.at(0) - c.at(0));
+   temp1 *= (y - c.at(1));
+   temp2 =  (x - c.at(0));
+   temp2 *= (a.at(1) - c.at(1));
+   
+   return 0.50 * (temp1 + temp2);
+}
+
+double my_triangle::get_area_c(int x, int y)
+{
+   vector<int> a = _a.get_point();
+   vector<int> b = _b.get_point();
+
+   double temp1;
+   double temp2;
+
+   temp1 =  (b.at(0) - a.at(0));
+   temp1 *= (y - a.at(1));
+   temp2 =  (x - a.at(0));
+   temp2 *= (b.at(1) - a.at(1));
+   
+   return 0.50 * (temp1 + temp2);
+}
+
+double my_triangle::get_area_a(int x, int y)
+{
+   double b, c, A;
+   A = get_area();
+   b = get_area_b(x,y);
+   c = get_area_c(x,y);
+
+   return A - (b + c);
+}
+
+bool my_triangle::is_in(int x, int y)
+{
+   bool answer = false;
+   double a, b, c, A;
+   A = get_area();
+   a = get_area_a(x,y);   
+   b = get_area_b(x,y);
+   c = get_area_c(x,y);
+   
+   cout << "Area: " << A << "  \n";
+   cout << "A: " << a << "  \n";
+   cout << "B: " << b << "  \n";
+   cout << "C: " << c << "  \n";
+   if (A < 0)
+      answer = c >= A && b >= A && a >= A ;
+   else
+      answer = c >= 0 && b >= 0 && a >= 0;
+   return answer;
+}
+
+/*
+int my_triangle::is_inside(int x, int y)
+{
+   
+}
+*/
 
 int main(int argc, char **argv)
 {
@@ -136,8 +238,10 @@ int main(int argc, char **argv)
 	auto image = make_shared<Image>(width, height);
 
 	//box.draw(image);
-	tri.draw_box(image);
+	//tri.draw_box(image);
+   tri.draw_fill(image);
    tri.draw(image);
+
 
 	// Write image to file
 	image->writeToFile(filename);
