@@ -125,47 +125,19 @@ int main(int argc, char **argv)
 	int width = atoi(argv[2]);
 	// Height of image
 	int height = atoi(argv[3]);
-	
 
-	int x[3];
-	int y[3];
-
-	// Vertex 1 x-coord (e.g., 100)
-	x[0] = atoi(argv[4]);
-	// Vertex 1 y-coord (e.g., 100)
-	y[0] = atoi(argv[5]);
-	my_pixel a(x[0], y[0], atoi(argv[6]), atoi(argv[7]), atoi(argv[8]));
+	my_pixel a(atoi(argv[4]), atoi(argv[5]), atoi(argv[6]), atoi(argv[7]), atoi(argv[8]));
+	my_pixel b(atoi(argv[9]), atoi(argv[10]), atoi(argv[11]), atoi(argv[12]), atoi(argv[13]));
+	my_pixel c(atoi(argv[14]), atoi(argv[15]), atoi(argv[16]), atoi(argv[17]), atoi(argv[18]));
 	
-	x[1] = atoi(argv[9]);
-	y[1] = atoi(argv[10]);
-	my_pixel b(x[1], y[1], atoi(argv[11]), atoi(argv[12]), atoi(argv[13]));
-	
-
-	x[2] = atoi(argv[14]);
-	y[2] = atoi(argv[15]);
-	my_pixel c(x[2], y[2], atoi(argv[16]), atoi(argv[17]), atoi(argv[18]));
-   	
-	
-
-	
-
-	
-	/*
-	my_pixel a(1, 1);
-	my_pixel b(50, 50);
-	my_pixel c(1, 50);
-	*/
 	my_triangle tri(a, b, c);
-
 
 	// Create the image. We're using a `shared_ptr`, a C++11 feature.
 	auto image = make_shared<Image>(width, height);
 
-
 	//box.draw(image);
 	tri.draw_box(image);
    tri.draw(image);
-	
 
 	// Write image to file
 	image->writeToFile(filename);
