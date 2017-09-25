@@ -81,25 +81,27 @@ private:
 
 my_triangle::my_triangle(my_pixel a, my_pixel b, my_pixel c) : _a(a), _b(b), _c(c) 
 {
-   vector<int> temp;
+   vector<int> temp, aa, bb, cc;
    int x[3], y[3];
-   
+
+
    temp = _a.get_point();
    x[0] = temp.at(0);
-   y[0] = temp.at(0);
+   y[0] = temp.at(1);
 
    temp = _b.get_point();
    x[1] = temp.at(0);
-   y[1] = temp.at(0);
+   y[1] = temp.at(1);
    
    temp = _c.get_point();
    x[2] = temp.at(0);
-   y[2] = temp.at(0);
+   y[2] = temp.at(1);
    
    _right = *max_element(x, x + 3);
    _left = *min_element(x, x + 3);
    _top = *max_element(y, y + 3);
    _bottom = *min_element(y, y + 3);
+   cout << "right:" << _right << " left:" << _left << " top:" << _top << " bot:" << _bottom << " \n";
 }
 void my_triangle::draw(shared_ptr<Image> img)
 {
@@ -113,22 +115,62 @@ void my_triangle::draw_box(shared_ptr<Image> img)
 	{
 		for (int j = _left; j <= _right; j++)
 		{
-			img->setPixel(j, i, i % 255, j % 255, (i + j) % 255);
+			img->setPixel(j, i, 255, 255, 255);
 		}
 	}
 }
 void my_triangle::draw_fill(shared_ptr<Image> img)
 {
+   vector<int> ca,cb,cc;
+   double area = get_area();
+   double a, b, c;
+   int re,gr,bl;
+   
+   ca = _a.get_color();
+   cb = _b.get_color();
+   cc = _c.get_color();
+
 	for (int i = _bottom; i <= _top; i++)
 	{
 		for (int j = _left; j <= _right; j++)
 		{
-         if (is_in(j,i))
-   			img->setPixel(j, i, 255,255,255);
+         if (is_in(j,i)) 
+         {
+            b = get_area_b(j, i) / area;
+            c = get_area_c(j, i) / area;
+            a = 1 - b - c;            
+
+            re = ca.at(0) * a + cb.at(0) * b + cc.at(0) * c;
+            gr = ca.at(1) * a + cb.at(1) * b + cc.at(1) * c;
+            bl = ca.at(2) * a + cb.at(2) * b + cc.at(2) * c;
+
+            img->setPixel(j, i, re , gr, bl);
+         }
 		}
 	}
 }
 
+double my_triangle::get_area()
+{
+   vector<int> a = _a.get_point();
+   vector<int> c = _c.get_point();
+   vector<int> b = _b.get_point();
+
+   int acx, abx, acy, aby;
+
+   double temp1;
+
+   acx = c.at(0) - a.at(0);
+   acy = c.at(1) - c.at(1);
+   abx = b.at(0) - a.at(0);
+   aby = b.at(1) - a.at(1);
+
+   //temp1 = (acx * aby) - (abx * acy);
+   temp1 = (abx * acy) - (acx * aby);
+
+   return temp1 / 2.0;
+}
+/*
 double my_triangle::get_area()
 {
    vector<int> a = _a.get_point();
@@ -138,13 +180,53 @@ double my_triangle::get_area()
    double temp1;
    double temp2;
 
-   temp1 = 0.50 * (b.at(0) - a.at(0));
-   temp1 *= (c.at(1) - a.at(1));
-   temp2 = 0.50 * (c.at(0) - a.at(0));
-   temp2 *= (b.at(1) - a.at(1));
-   return temp1 + temp2;
+   temp1 = (c.at(0) - a.at(0)) * (b.at(1) - a.at(1));
+   temp2 = (c.at(1) - a.at(1)) * (b.at(0) - a.at(0));
+
+   return (temp1 + temp2) / 2.0;
+}
+*/
+
+double my_triangle::get_area_b(int x, int y)
+{
+   vector<int> a = _a.get_point();
+   vector<int> c = _c.get_point();
+
+   int acx, apx, acy, apy;
+
+   double temp1;
+
+   acx = c.at(0) - a.at(0);
+   acy = c.at(1) - c.at(1);
+   apx = x - a.at(0);
+   apy = y - a.at(1);
+
+   //temp1 = (acx * apy) - (apx * acy);
+   temp1 = (apx * acy) - (acx * apy);
+
+   return temp1 / 2.0;
 }
 
+double my_triangle::get_area_c(int x, int y)
+{
+   vector<int> a = _a.get_point();
+   vector<int> b = _b.get_point();
+   
+   int abx, apx, aby, apy;
+
+   double temp1;
+   abx = b.at(0) - a.at(0);
+   aby = b.at(1) - a.at(1);
+   apx = x - a.at(0);
+   apy = y - a.at(1);
+
+   //temp1 =  (apx * aby) - (apy * abx); 
+   temp1 =   (apy * abx) - (apx * aby); 
+
+   return temp1 / 2.0;
+}
+
+/*
 double my_triangle::get_area_b(int x, int y)
 {
    vector<int> a = _a.get_point();
@@ -152,13 +234,12 @@ double my_triangle::get_area_b(int x, int y)
 
    double temp1;
    double temp2;
-  
-   temp1 =  (a.at(0) - c.at(0));
-   temp1 *= (y - c.at(1));
-   temp2 =  (x - c.at(0));
-   temp2 *= (a.at(1) - c.at(1));
+
+   temp1 = (c.at(0) - a.at(0)) * (y - a.at(1));
+   temp2 = (c.at(1) - a.at(1)) * (x - a.at(0));
    
-   return 0.50 * (temp1 + temp2);
+
+   return (temp1 + temp2) / 2.0;
 }
 
 double my_triangle::get_area_c(int x, int y)
@@ -169,42 +250,45 @@ double my_triangle::get_area_c(int x, int y)
    double temp1;
    double temp2;
 
-   temp1 =  (b.at(0) - a.at(0));
-   temp1 *= (y - a.at(1));
-   temp2 =  (x - a.at(0));
-   temp2 *= (b.at(1) - a.at(1));
-   
-   return 0.50 * (temp1 + temp2);
+   temp1 = (x- a.at(0)) * (b.at(1) - a.at(1));
+   temp2 = (y - a.at(1)) * (b.at(0) - a.at(0));
+
+   return (temp1 + temp2) / 2.0;
 }
 
 double my_triangle::get_area_a(int x, int y)
 {
-   double b, c, A;
-   A = get_area();
-   b = get_area_b(x,y);
-   c = get_area_c(x,y);
+   vector<int> c = _c.get_point();
+   vector<int> b = _b.get_point();
 
-   return A - (b + c);
+   double temp1;
+   double temp2;
+
+   temp1 = 0.50 * (b.at(1) - c.at(1));
+   temp1 *= (x - b.at(0));
+   temp2 = 0.50 * (c.at(0) - b.at(0));
+   temp2 *= (y - c.at(1));
+   return temp1 + temp2;
 }
-
+*/
 bool my_triangle::is_in(int x, int y)
 {
    bool answer = false;
-   double a, b, c, A;
-   A = get_area();
-   a = get_area_a(x,y);   
-   b = get_area_b(x,y);
-   c = get_area_c(x,y);
+   double a,b,c, area;
    
-   cout << "Area: " << A << "  \n";
-   cout << "A: " << a << "  \n";
-   cout << "B: " << b << "  \n";
-   cout << "C: " << c << "  \n";
-   if (A < 0)
-      answer = c >= A && b >= A && a >= A ;
-   else
-      answer = c >= 0 && b >= 0 && a >= 0;
-   return answer;
+   area = get_area();
+
+   b = get_area_b(x,y) / area;
+   c = get_area_c(x,y) / area;
+   a = 1 - b - c;
+
+
+   if (a > 0 && b > 0 && c > 0)
+      answer = true;
+   //if (a == 0 || b == 0 || c == 0)
+   //   answer = true;
+
+   return answer; 
 }
 
 /*
@@ -238,10 +322,11 @@ int main(int argc, char **argv)
 	auto image = make_shared<Image>(width, height);
 
 	//box.draw(image);
-	//tri.draw_box(image);
+	tri.draw_box(image);
    tri.draw_fill(image);
    tri.draw(image);
-
+   cout << "Area = " << tri.get_area() << "\n";
+   cout << "trying halfway (100, 100)= " << tri.is_in(100 , 100) << " \n";
 
 	// Write image to file
 	image->writeToFile(filename);
