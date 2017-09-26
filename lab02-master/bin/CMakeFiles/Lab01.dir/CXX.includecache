@@ -6,13 +6,23 @@
 
 #IncludeRegexTransform: 
 
-/home/zeagan/Desktop/Graphics/lab02-master/src/Image.h
+/home/bill/class/Graphics/lab02-master/src/Image.cpp
+iostream
+-
+cassert
+-
+Image.h
+/home/bill/class/Graphics/lab02-master/src/Image.h
+stb_image_write.h
+/home/bill/class/Graphics/lab02-master/src/stb_image_write.h
+
+/home/bill/class/Graphics/lab02-master/src/Image.h
 string
 -
 vector
 -
 
-/home/zeagan/Desktop/Graphics/lab02-master/src/main.cpp
+/home/bill/class/Graphics/lab02-master/src/main.cpp
 iostream
 -
 string
@@ -24,5 +34,19 @@ memory
 algorithm
 -
 Image.h
-/home/zeagan/Desktop/Graphics/lab02-master/src/Image.h
+/home/bill/class/Graphics/lab02-master/src/Image.h
+
+/home/bill/class/Graphics/lab02-master/src/stb_image_write.h
+stdio.h
+-
+stdarg.h
+-
+stdlib.h
+-
+string.h
+-
+math.h
+-
+assert.h
+-
 
