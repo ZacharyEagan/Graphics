@@ -46,10 +46,12 @@ public:
       int width, height;
 		glfwGetFramebufferSize(windowManager->getHandle(), 
                              &width, &height);
+		float aspect = width/(float)height;
      xp -= (width / 2);
       xp /= (width / 2) ;     
-     
-
+      if (aspect > 1) 
+         xp *=  aspect;
+      
       return xp;
    }
    float p2wY(double yp)
@@ -57,7 +59,11 @@ public:
       int width, height;
 		glfwGetFramebufferSize(windowManager->getHandle(), 
                              &width, &height);
-      return (((height / 2) - yp) / (height / 2));
+		float aspect = height/(float)width;
+     yp =  (((height / 2) - yp) / (height / 2));
+      if (aspect > 1)
+        yp *= aspect; 
+      return yp;
    }
 
 	// callback for the mouse when clicked move the triangle when helper functions
