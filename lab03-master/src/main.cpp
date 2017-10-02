@@ -91,7 +91,14 @@ public:
 			-0.5f, -0.5f, 0.0f,
 			0.5f, -0.5f, 0.0f,
 			0.0f, 0.7f, 0.0f,
-      
+         
+         -0.5f, 0.7f, 0.0f,
+         -0.1f, 0.7f, 0.0f,
+         -0.5f, -0.4f, 0.0f,
+   
+         0.5f, 0.7f, 0.0f,
+         0.1f, 0.7f, 0.0f,
+         0.5f, -0.4f, 0.0f, 
 		};
 
 
@@ -182,7 +189,7 @@ public:
 		glBindVertexArray(VertexArrayID);
 
 		//actually draw from vertex 0, 3 vertices
-		glDrawArrays(GL_TRIANGLES, 0, 3); //NEW3 REMOVED LINE
+		glDrawArrays(GL_TRIANGLES, 0, 9); //NEW3 REMOVED LINE
 		//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);//NEW4
 
 		glBindVertexArray(0);
