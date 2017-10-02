@@ -30,6 +30,7 @@ public:
 
 	// Data necessary to give our triangle to OpenGL
 	GLuint VertexBufferID;
+   GLuint IndexBufferID;  //NEW1
 
 	void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
@@ -84,12 +85,17 @@ public:
 		//set the current state to focus on our vertex buffer
 		glBindBuffer(GL_ARRAY_BUFFER, VertexBufferID);
 
+
 		static const GLfloat g_vertex_buffer_data[] =
 		{
 			-0.5f, -0.5f, 0.0f,
 			0.5f, -0.5f, 0.0f,
-			0.0f, 0.7f, 0.0f
+			0.0f, 0.7f, 0.0f,
+      
 		};
+
+
+
 		//actually memcopy the data - only do this once
 		glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_DYNAMIC_DRAW);
 
@@ -97,6 +103,18 @@ public:
 		glEnableVertexAttribArray(0);
 		//key function to get up how many elements to pull out at a time (3)
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*) 0);
+      
+      //NEW2
+      glGenBuffers(1, &IndexBufferID);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferID);
+      static const GLfloat g_index_buffer_data[] =
+      {
+         0, 1, 2,
+         3, 4, 5,
+      };
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(g_index_buffer_data), 
+                   g_index_buffer_data, GL_DYNAMIC_DRAW);
+      //END NEW2
 
 		glBindVertexArray(0);
 
@@ -108,7 +126,7 @@ public:
 		GLSL::checkVersion();
 
 		// Set background color.
-		glClearColor(0.9f, 0.2f, 0.0f, 1.0f);
+		glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 		// Enable z-buffer test.
 		glEnable(GL_DEPTH_TEST);
 
@@ -164,7 +182,8 @@ public:
 		glBindVertexArray(VertexArrayID);
 
 		//actually draw from vertex 0, 3 vertices
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 3); //NEW3 REMOVED LINE
+		//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);//NEW4
 
 		glBindVertexArray(0);
 
