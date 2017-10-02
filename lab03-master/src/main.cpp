@@ -40,6 +40,26 @@ public:
 		}
 	}
 
+
+   float p2wX(double xp)
+   {
+      int width, height;
+		glfwGetFramebufferSize(windowManager->getHandle(), 
+                             &width, &height);
+     xp -= (width / 2);
+      xp /= (width / 2) ;     
+     
+
+      return xp;
+   }
+   float p2wY(double yp)
+   {
+      int width, height;
+		glfwGetFramebufferSize(windowManager->getHandle(), 
+                             &width, &height);
+      return (((height / 2) - yp) / (height / 2));
+   }
+
 	// callback for the mouse when clicked move the triangle when helper functions
 	// written
 	void mouseCallback(GLFWwindow *window, int button, int action, int mods)
@@ -53,8 +73,8 @@ public:
 
 			//change this to be the points converted to WORLD
 			//THIS IS BROKEN< YOU GET TO FIX IT - yay!
-			newPt[0] = 0;
-			newPt[1] = 0;
+			newPt[0] = p2wX(posX);
+			newPt[1] = p2wY(posY);
 
 			std::cout << "converted:" << newPt[0] << " " << newPt[1] << std::endl;
 			glBindBuffer(GL_ARRAY_BUFFER, VertexBufferID);
