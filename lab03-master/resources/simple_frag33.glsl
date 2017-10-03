@@ -2,13 +2,13 @@
 uniform vec2 uWindowSize;
 out vec3 color;
 
-in vec2 vertex_color;
+in vec3 vertex_color;
 
 void main()
 {
-	color = vec3(0.0, 0.0, 0.0);
+	color = vertex_color;
    //color.r = gl_FragCoord.x / uWindowSize.x;
-   color.g = vertex_color.y;
+ //  color.g = vertex_color.y;
 //   color.r = gl_FragCoord.y;
-   color.r = vertex_color.x;
+  // color.r = vertex_color.x;
 }
