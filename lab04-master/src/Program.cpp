@@ -51,8 +51,8 @@ bool Program::init()
 		if (isVerbose())
 		{
 			GLSL::printShaderInfoLog(VS);
-			std::cout << "Error compiling vertex shader " << vShaderName << std::endl;
-		}
+			std::cout << "Error compiling vertex shader " << vShaderName << std::endl; 
+		}  
 		return false;
 	}
 
@@ -64,8 +64,9 @@ bool Program::init()
 		if (isVerbose())
 		{
 			GLSL::printShaderInfoLog(FS);
-			std::cout << "Error compiling fragment shader " << fShaderName << std::endl;
+			std::cout << "E1111rror compiling fragment shader " << fShaderName << std::endl;
 		}
+      exit(0);
 		return false;
 	}
 

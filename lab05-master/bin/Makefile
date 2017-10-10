@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bill/class/Graphics/lab04-master
+CMAKE_SOURCE_DIR = /home/bill/class/Graphics/lab05-master
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bill/class/Graphics/lab04-master/bin
+CMAKE_BINARY_DIR = /home/bill/class/Graphics/lab05-master/bin
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bill/class/Graphics/lab04-master/bin/CMakeFiles /home/bill/class/Graphics/lab04-master/bin/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bill/class/Graphics/lab05-master/bin/CMakeFiles /home/bill/class/Graphics/lab05-master/bin/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bill/class/Graphics/lab04-master/bin/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bill/class/Graphics/lab05-master/bin/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named lab3
+# Target rules for targets named lab5
 
 # Build rule for target.
-lab3: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 lab3
-.PHONY : lab3
+lab5: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 lab5
+.PHONY : lab5
 
 # fast build rule for target.
-lab3/fast:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/build
-.PHONY : lab3/fast
+lab5/fast:
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/build
+.PHONY : lab5/fast
 
 ext/glad/src/glad.o: ext/glad/src/glad.c.o
 
@@ -129,7 +129,7 @@ ext/glad/src/glad.o: ext/glad/src/glad.c.o
 
 # target to build an object file
 ext/glad/src/glad.c.o:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/ext/glad/src/glad.c.o
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/ext/glad/src/glad.c.o
 .PHONY : ext/glad/src/glad.c.o
 
 ext/glad/src/glad.i: ext/glad/src/glad.c.i
@@ -138,7 +138,7 @@ ext/glad/src/glad.i: ext/glad/src/glad.c.i
 
 # target to preprocess a source file
 ext/glad/src/glad.c.i:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/ext/glad/src/glad.c.i
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/ext/glad/src/glad.c.i
 .PHONY : ext/glad/src/glad.c.i
 
 ext/glad/src/glad.s: ext/glad/src/glad.c.s
@@ -147,7 +147,7 @@ ext/glad/src/glad.s: ext/glad/src/glad.c.s
 
 # target to generate assembly for a file
 ext/glad/src/glad.c.s:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/ext/glad/src/glad.c.s
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/ext/glad/src/glad.c.s
 .PHONY : ext/glad/src/glad.c.s
 
 src/GLSL.o: src/GLSL.cpp.o
@@ -156,7 +156,7 @@ src/GLSL.o: src/GLSL.cpp.o
 
 # target to build an object file
 src/GLSL.cpp.o:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/GLSL.cpp.o
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/GLSL.cpp.o
 .PHONY : src/GLSL.cpp.o
 
 src/GLSL.i: src/GLSL.cpp.i
@@ -165,7 +165,7 @@ src/GLSL.i: src/GLSL.cpp.i
 
 # target to preprocess a source file
 src/GLSL.cpp.i:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/GLSL.cpp.i
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/GLSL.cpp.i
 .PHONY : src/GLSL.cpp.i
 
 src/GLSL.s: src/GLSL.cpp.s
@@ -174,35 +174,8 @@ src/GLSL.s: src/GLSL.cpp.s
 
 # target to generate assembly for a file
 src/GLSL.cpp.s:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/GLSL.cpp.s
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/GLSL.cpp.s
 .PHONY : src/GLSL.cpp.s
-
-src/MatrixStack.o: src/MatrixStack.cpp.o
-
-.PHONY : src/MatrixStack.o
-
-# target to build an object file
-src/MatrixStack.cpp.o:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/MatrixStack.cpp.o
-.PHONY : src/MatrixStack.cpp.o
-
-src/MatrixStack.i: src/MatrixStack.cpp.i
-
-.PHONY : src/MatrixStack.i
-
-# target to preprocess a source file
-src/MatrixStack.cpp.i:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/MatrixStack.cpp.i
-.PHONY : src/MatrixStack.cpp.i
-
-src/MatrixStack.s: src/MatrixStack.cpp.s
-
-.PHONY : src/MatrixStack.s
-
-# target to generate assembly for a file
-src/MatrixStack.cpp.s:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/MatrixStack.cpp.s
-.PHONY : src/MatrixStack.cpp.s
 
 src/Program.o: src/Program.cpp.o
 
@@ -210,7 +183,7 @@ src/Program.o: src/Program.cpp.o
 
 # target to build an object file
 src/Program.cpp.o:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/Program.cpp.o
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/Program.cpp.o
 .PHONY : src/Program.cpp.o
 
 src/Program.i: src/Program.cpp.i
@@ -219,7 +192,7 @@ src/Program.i: src/Program.cpp.i
 
 # target to preprocess a source file
 src/Program.cpp.i:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/Program.cpp.i
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/Program.cpp.i
 .PHONY : src/Program.cpp.i
 
 src/Program.s: src/Program.cpp.s
@@ -228,8 +201,35 @@ src/Program.s: src/Program.cpp.s
 
 # target to generate assembly for a file
 src/Program.cpp.s:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/Program.cpp.s
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/Program.cpp.s
 .PHONY : src/Program.cpp.s
+
+src/Shape.o: src/Shape.cpp.o
+
+.PHONY : src/Shape.o
+
+# target to build an object file
+src/Shape.cpp.o:
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/Shape.cpp.o
+.PHONY : src/Shape.cpp.o
+
+src/Shape.i: src/Shape.cpp.i
+
+.PHONY : src/Shape.i
+
+# target to preprocess a source file
+src/Shape.cpp.i:
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/Shape.cpp.i
+.PHONY : src/Shape.cpp.i
+
+src/Shape.s: src/Shape.cpp.s
+
+.PHONY : src/Shape.s
+
+# target to generate assembly for a file
+src/Shape.cpp.s:
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/Shape.cpp.s
+.PHONY : src/Shape.cpp.s
 
 src/WindowManager.o: src/WindowManager.cpp.o
 
@@ -237,7 +237,7 @@ src/WindowManager.o: src/WindowManager.cpp.o
 
 # target to build an object file
 src/WindowManager.cpp.o:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/WindowManager.cpp.o
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/WindowManager.cpp.o
 .PHONY : src/WindowManager.cpp.o
 
 src/WindowManager.i: src/WindowManager.cpp.i
@@ -246,7 +246,7 @@ src/WindowManager.i: src/WindowManager.cpp.i
 
 # target to preprocess a source file
 src/WindowManager.cpp.i:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/WindowManager.cpp.i
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/WindowManager.cpp.i
 .PHONY : src/WindowManager.cpp.i
 
 src/WindowManager.s: src/WindowManager.cpp.s
@@ -255,7 +255,7 @@ src/WindowManager.s: src/WindowManager.cpp.s
 
 # target to generate assembly for a file
 src/WindowManager.cpp.s:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/WindowManager.cpp.s
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/WindowManager.cpp.s
 .PHONY : src/WindowManager.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -264,7 +264,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/main.cpp.o
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -273,7 +273,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/main.cpp.i
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -282,7 +282,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/lab3.dir/build.make CMakeFiles/lab3.dir/src/main.cpp.s
+	$(MAKE) -f CMakeFiles/lab5.dir/build.make CMakeFiles/lab5.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -293,19 +293,19 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... lab3"
+	@echo "... lab5"
 	@echo "... ext/glad/src/glad.o"
 	@echo "... ext/glad/src/glad.i"
 	@echo "... ext/glad/src/glad.s"
 	@echo "... src/GLSL.o"
 	@echo "... src/GLSL.i"
 	@echo "... src/GLSL.s"
-	@echo "... src/MatrixStack.o"
-	@echo "... src/MatrixStack.i"
-	@echo "... src/MatrixStack.s"
 	@echo "... src/Program.o"
 	@echo "... src/Program.i"
 	@echo "... src/Program.s"
+	@echo "... src/Shape.o"
+	@echo "... src/Shape.i"
+	@echo "... src/Shape.s"
 	@echo "... src/WindowManager.o"
 	@echo "... src/WindowManager.i"
 	@echo "... src/WindowManager.s"

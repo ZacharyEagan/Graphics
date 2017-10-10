@@ -64,31 +64,97 @@ public:
 
 		// overwrite diagonal with 1s
 		M[0] = M[5] = M[10] = M[15] = 1;
+
 	}
 
 	static void createTranslateMat(float *T, float x, float y, float z)
 	{
-		// IMPLEMENT ME
+		for (int i = 0; i < 4; ++i)
+      {
+         for (int j = 0; j < 4; ++j)
+         {
+            T[i + 4*j] = 0;
+         }
+      }
+      T[0] = T[5] = T[10] = T[15] = 1;
+      T[14] = z;
+      T[13] = y;
+      T[12] = x;
 	}
 
 	static void createScaleMat(float *S, float x, float y, float z)
 	{
 		// IMPLEMENT ME
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int j = 0; j < 4; ++j)
+			{
+				S[i + 4*j] = 0;
+			}
+		}
+		// overwrite diagonal with 1s
+		S[0] = x;
+      S[5] = y;
+      S[10] = z;
+      S[15] = 1;
 	}
 
 	static void createRotateMatX(float *R, float radians)
 	{
 		// IMPLEMENT ME
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int j = 0; j < 4; ++j)
+			{
+				R[i + 4*j] = 0;
+			}
+		}
+		// overwrite diagonal with 1s
+		R[0] = 1;
+      R[5] = cos(radians);
+      R[10] = cos(radians);
+      R[15] = 1;
+      R[16] = sin(radians);
+      R[9] = -sin(radians);
 	}
 
 	static void createRotateMatY(float *R, float radians)
 	{
 		// IMPLEMENT ME
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int j = 0; j < 4; ++j)
+			{
+				R[i + 4*j] = 0;
+			}
+		}
+		// overwrite diagonal with 1s
+		R[0] = cos(radians);
+      R[5] = 1;
+      R[10] = cos(radians);
+      R[15] = 1;
+      R[1] = sin(radians);
+      R[2] = -sin(radians);
 	}
 
 	static void createRotateMatZ(float *R, float radians)
 	{
 		// IMPLEMENT ME
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int j = 0; j < 4; ++j)
+			{
+				R[i + 4*j] = 0;
+			}
+		}
+		// overwrite diagonal with 1s
+		R[0] = cos(radians);
+      R[5] = cos(radians);
+      R[10] = 1;
+      R[15] = 1;
+      R[1] = sin(radians);
+      R[4] = -sin(radians);
+      
 	}
 
 	static void multMat(float *C, const float *A, const float *B)
@@ -108,8 +174,10 @@ public:
 				// vector dot product
 				for (int j = 0; j < 4; ++j)
 				{
+               c += A[i+4*j]*B[j+4*k];
 					// IMPLEMENT ME
 				}
+            C[i+4*k] = c;
 			}
 		}
 	}
@@ -224,6 +292,9 @@ public:
 	{
 		// Local modelview matrix use this for lab 5
 		float MV[16] = {0};
+		float temp1[16] = {0};
+		float temp2[16] = {0};
+		float temp3[16] = {0};
 		float P[16] = {0};
 
 		// Get current frame buffer size.
@@ -237,7 +308,19 @@ public:
 		// Use the local matrices for lab 5
 		float aspect = width/(float)height;
 		Matrix::createPerspectiveMat(P, 70.0f, aspect, 0.1f, 100.0f);
-		Matrix::createIdentityMat(MV);
+//		Matrix::createIdentityMat(MV);
+
+      //Matrix::createScaleMat(temp2, 1, 1.2, 1.3);
+
+      //Matrix::createRotateMatX(temp1, 1.2);
+      //Matrix::createRotateMatY(temp1, 0.5);
+      //Matrix::multMat(temp3, temp1, temp2);
+      Matrix::createRotateMatZ(temp2, 0.5);
+      //Matrix::multMat(temp1, temp3, temp2);
+      
+      Matrix::createTranslateMat(MV, 0, 0, -5);
+      //Matrix::multMat(MV, temp2, temp3);
+
 
 		// Draw mesh using GLSL
 		prog->bind();
@@ -267,6 +350,13 @@ int main(int argc, char **argv)
 	windowManager->init(640, 480);
 	windowManager->setEventCallbacks(application);
 	application->windowManager = windowManager;
+
+
+
+
+
+
+
 
 	// This is the code that will likely change program to program as you
 	// may need to initialize or set up different data and state

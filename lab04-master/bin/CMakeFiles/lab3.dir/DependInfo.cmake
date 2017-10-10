@@ -5,7 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/bill/class/Graphics/lab03-master/ext/glad/src/glad.c" "/home/bill/class/Graphics/lab03-master/bin/CMakeFiles/lab3.dir/ext/glad/src/glad.c.o"
+  "/home/bill/class/Graphics/lab04-master/ext/glad/src/glad.c" "/home/bill/class/Graphics/lab04-master/bin/CMakeFiles/lab3.dir/ext/glad/src/glad.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
@@ -15,11 +15,11 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "/usr/include/libdrm"
   )
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/bill/class/Graphics/lab03-master/src/GLSL.cpp" "/home/bill/class/Graphics/lab03-master/bin/CMakeFiles/lab3.dir/src/GLSL.cpp.o"
-  "/home/bill/class/Graphics/lab03-master/src/MatrixStack.cpp" "/home/bill/class/Graphics/lab03-master/bin/CMakeFiles/lab3.dir/src/MatrixStack.cpp.o"
-  "/home/bill/class/Graphics/lab03-master/src/Program.cpp" "/home/bill/class/Graphics/lab03-master/bin/CMakeFiles/lab3.dir/src/Program.cpp.o"
-  "/home/bill/class/Graphics/lab03-master/src/WindowManager.cpp" "/home/bill/class/Graphics/lab03-master/bin/CMakeFiles/lab3.dir/src/WindowManager.cpp.o"
-  "/home/bill/class/Graphics/lab03-master/src/main.cpp" "/home/bill/class/Graphics/lab03-master/bin/CMakeFiles/lab3.dir/src/main.cpp.o"
+  "/home/bill/class/Graphics/lab04-master/src/GLSL.cpp" "/home/bill/class/Graphics/lab04-master/bin/CMakeFiles/lab3.dir/src/GLSL.cpp.o"
+  "/home/bill/class/Graphics/lab04-master/src/MatrixStack.cpp" "/home/bill/class/Graphics/lab04-master/bin/CMakeFiles/lab3.dir/src/MatrixStack.cpp.o"
+  "/home/bill/class/Graphics/lab04-master/src/Program.cpp" "/home/bill/class/Graphics/lab04-master/bin/CMakeFiles/lab3.dir/src/Program.cpp.o"
+  "/home/bill/class/Graphics/lab04-master/src/WindowManager.cpp" "/home/bill/class/Graphics/lab04-master/bin/CMakeFiles/lab3.dir/src/WindowManager.cpp.o"
+  "/home/bill/class/Graphics/lab04-master/src/main.cpp" "/home/bill/class/Graphics/lab04-master/bin/CMakeFiles/lab3.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

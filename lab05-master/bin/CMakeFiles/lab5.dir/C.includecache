@@ -34,7 +34,7 @@ stdint.h
 inttypes.h
 -
 
-/home/bill/class/Graphics/lab04-master/ext/glad/src/glad.c
+/home/bill/class/Graphics/lab05-master/ext/glad/src/glad.c
 stdio.h
 -
 stdlib.h

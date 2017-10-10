@@ -186,7 +186,7 @@ public:
 	void init(const std::string& resourceDirectory)
 	{
 		GLSL::checkVersion();
-
+      
 		// Set background color.
 		glClearColor(0.001f, 0.001f, 0.4f, 1.0f);
 		// Enable z-buffer test.
@@ -196,7 +196,14 @@ public:
 		prog = std::make_shared<Program>();
 		prog->setVerbose(true);
 		prog->setShaderNames(resourceDirectory + "/simple_vert33.glsl", resourceDirectory + "/simple_frag33.glsl");
-		prog->init();
+      std::cout << "AAAAAAAAAAAAA\n";
+      bool inited = prog->init();
+      std::cout << "INITED " << inited << "\n"; 
+		if (inited == false)
+      {
+         perror("Shader Compile Error");
+         exit(0);  
+      }
 		prog->addUniform("P");
 		prog->addUniform("MV");
       prog->addUniform("uWindowSize");
@@ -243,7 +250,8 @@ public:
 		glUniformMatrix4fv(prog->getUniform("P"), 1, GL_FALSE, glm::value_ptr(P->topMatrix()));
 		glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE, glm::value_ptr(MV->topMatrix()));
 
-      glUniform2f(prog->getUniform("uWindowSize"), (float) width, (float) height);
+      glUniform2f(prog->getUniform("uWindowSize"),
+                  (float) width, (float) height);
       glUniform1f(prog->getUniform("uTime"), (float) glfwGetTime());
       
 

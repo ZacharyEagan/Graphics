@@ -7,11 +7,11 @@ C_FLAGS =
 
 C_DEFINES = 
 
-C_INCLUDES = -I/home/bill/class/Graphics/lab04-master/ext/glad/include -I/usr/include/libdrm 
+C_INCLUDES = -I/home/bill/class/Graphics/lab05-master/ext/glad/include -I/usr/include/libdrm 
 
 CXX_FLAGS =  -std=c++0x -Wall -pedantic  
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/bill/class/Graphics/lab04-master/ext/glad/include -I/usr/include/libdrm 
+CXX_INCLUDES = -I/home/bill/class/Graphics/lab05-master/ext/glad/include -I/usr/include/libdrm 
 

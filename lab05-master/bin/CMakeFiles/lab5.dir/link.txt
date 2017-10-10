@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++0x -Wall -pedantic   CMakeFiles/lab5.dir/src/Program.cpp.o CMakeFiles/lab5.dir/src/GLSL.cpp.o CMakeFiles/lab5.dir/src/main.cpp.o CMakeFiles/lab5.dir/src/Shape.cpp.o CMakeFiles/lab5.dir/src/WindowManager.cpp.o CMakeFiles/lab5.dir/ext/glad/src/glad.c.o  -o lab5 -rdynamic -lglfw -lGL -ldl 

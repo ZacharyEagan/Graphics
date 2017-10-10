@@ -1,4 +1,4 @@
-# Install script for directory: /home/bill/class/Graphics/lab04-master
+# Install script for directory: /home/bill/class/Graphics/lab05-master
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/bill/class/Graphics/lab04-master/bin/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/bill/class/Graphics/lab05-master/bin/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
