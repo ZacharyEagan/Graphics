@@ -114,7 +114,7 @@ public:
       R[5] = cos(radians);
       R[10] = cos(radians);
       R[15] = 1;
-      R[16] = sin(radians);
+      R[6] = sin(radians);
       R[9] = -sin(radians);
 	}
 
@@ -133,7 +133,7 @@ public:
       R[5] = 1;
       R[10] = cos(radians);
       R[15] = 1;
-      R[1] = sin(radians);
+      R[8] = sin(radians);
       R[2] = -sin(radians);
 	}
 
@@ -218,10 +218,10 @@ public:
 	WindowManager * windowManager = nullptr;
 
 	// Our shader program
-	std::shared_ptr<Program> prog;
+	//std::shared_ptr<Program> prog;
 
 	// Shape to be used (from obj file)
-	shared_ptr<Shape> shape;
+
 
 	// Contains vertex information for OpenGL
 	GLuint VertexArrayID;
@@ -253,9 +253,11 @@ public:
 		glViewport(0, 0, width, height);
 	}
 
-	void init(const std::string& resourceDirectory)
+	std::shared_ptr<Program> init(const std::string& resourceDirectory)
 	{
 		GLSL::checkVersion();
+
+	   std::shared_ptr<Program> prog;
 
 		// Set background color.
 		glClearColor(0.12f, 0.34f, 0.56f, 1.0f);
@@ -277,24 +279,25 @@ public:
 		prog->addUniform("MV");
 		prog->addAttribute("vertPos");
 		prog->addAttribute("vertNor");
+      
+      return prog;
 	}
 
-	void initGeom(const std::string& resourceDirectory)
+	shared_ptr<Shape> initGeom(const std::string& resourceDirectory)
 	{
+	   shared_ptr<Shape> shape;
 		// Initialize mesh.
 		shape = make_shared<Shape>();
 		shape->loadMesh(resourceDirectory + "/cube.obj");
 		shape->resize();
 		shape->init();
+      
+      return shape;
 	}
 
-	void render()
+	void render(std::shared_ptr<Program> prog, 
+               float MV[16], shared_ptr<Shape> shape)
 	{
-		// Local modelview matrix use this for lab 5
-		float MV[16] = {0};
-		float temp1[16] = {0};
-		float temp2[16] = {0};
-		float temp3[16] = {0};
 		float P[16] = {0};
 
 		// Get current frame buffer size.
@@ -302,25 +305,11 @@ public:
 		glfwGetFramebufferSize(windowManager->getHandle(), &width, &height);
 		glViewport(0, 0, width, height);
 
-		// Clear framebuffer.
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Use the local matrices for lab 5
 		float aspect = width/(float)height;
 		Matrix::createPerspectiveMat(P, 70.0f, aspect, 0.1f, 100.0f);
-//		Matrix::createIdentityMat(MV);
-
-      //Matrix::createScaleMat(temp2, 1, 1.2, 1.3);
-
-      //Matrix::createRotateMatX(temp1, 1.2);
-      //Matrix::createRotateMatY(temp1, 0.5);
-      //Matrix::multMat(temp3, temp1, temp2);
-      Matrix::createRotateMatZ(temp2, 0.5);
-      //Matrix::multMat(temp1, temp3, temp2);
-      
-      Matrix::createTranslateMat(MV, 0, 0, -5);
-      //Matrix::multMat(MV, temp2, temp3);
-
+		
 
 		// Draw mesh using GLSL
 		prog->bind();
@@ -335,6 +324,19 @@ int main(int argc, char **argv)
 {
 	// Where the resources are loaded from
 	std::string resourceDir = "../resources";
+	std::vector<std::shared_ptr<Program>> progs;
+	std::vector<std::shared_ptr<Shape>> shapes;
+	std::shared_ptr<Program> prog;
+	std::shared_ptr<Shape> shape;
+   std::vector<float *> MVs;
+   float MV1[16] = {0};
+   float MV2[16] = {0};
+   float MV3[16] = {0};
+   float MV4[16] = {0};
+   float MV5[16] = {0};
+
+	float temp1[16] = {0};
+
 
 	if (argc >= 2)
 	{
@@ -361,14 +363,96 @@ int main(int argc, char **argv)
 	// This is the code that will likely change program to program as you
 	// may need to initialize or set up different data and state
 
-	application->init(resourceDir);
-	application->initGeom(resourceDir);
+	prog = application->init(resourceDir);
+   Matrix::createIdentityMat(MV1);
+   Matrix::createScaleMat(temp1, 0.2, 2.0, 0.2);
+   Matrix::multMat(MV1, temp1, MV1);
+   Matrix::createRotateMatX(temp1, 0.0);
+   Matrix::multMat(MV1, temp1, MV1);
+   Matrix::createRotateMatY(temp1, 0.7);
+   Matrix::multMat(MV1, temp1, MV1);
+   Matrix::createRotateMatZ(temp1, 0.0);
+   Matrix::multMat(MV1, temp1, MV1);
+   Matrix::createTranslateMat(temp1, -2.5, 0, -5);
+   Matrix::multMat(MV1, temp1, MV1);
+   MVs.push_back(MV1);
+   progs.push_back(prog);
+	shape = application->initGeom(resourceDir);
+   shapes.push_back(shape);
 
+	prog = application->init(resourceDir);
+   Matrix::createIdentityMat(MV2);
+   Matrix::createScaleMat(temp1, 0.2, 2.0, 0.2);
+   Matrix::multMat(MV2, temp1, MV2);
+   Matrix::createRotateMatX(temp1, 0.0);
+   Matrix::multMat(MV2, temp1, MV2);
+   Matrix::createRotateMatY(temp1, 0.7);
+   Matrix::multMat(MV2, temp1, MV2);
+   Matrix::createRotateMatZ(temp1, 0.0);
+   Matrix::multMat(MV2, temp1, MV2);
+   Matrix::createTranslateMat(temp1, -.25, 0, -5);
+   Matrix::multMat(MV2, temp1, MV2);
+   MVs.push_back(MV2);
+   progs.push_back(prog);
+	shape = application->initGeom(resourceDir);
+   shapes.push_back(shape);
+
+
+	prog = application->init(resourceDir);
+   Matrix::createIdentityMat(MV3);
+   Matrix::createScaleMat(temp1, 0.2, 2.0, 0.2);
+   Matrix::multMat(MV3, temp1, MV3);
+   Matrix::createRotateMatX(temp1, 0.0);
+   Matrix::multMat(MV3, temp1, MV3);
+   Matrix::createRotateMatY(temp1, 0.7);
+   Matrix::multMat(MV3, temp1, MV3);
+   Matrix::createRotateMatZ(temp1, 0.0);
+   Matrix::multMat(MV3, temp1, MV3);
+   Matrix::createTranslateMat(temp1, 2.5, 0, -5);
+   Matrix::multMat(MV3, temp1, MV3);
+   MVs.push_back(MV3);
+   progs.push_back(prog);
+	shape = application->initGeom(resourceDir);
+   shapes.push_back(shape);
+
+
+	prog = application->init(resourceDir);
+   Matrix::createIdentityMat(MV4);
+   Matrix::createScaleMat(temp1, 0.4, 2.0, 0.4);
+   Matrix::multMat(MV4, temp1, MV4);
+   Matrix::createRotateMatX(temp1, 0.0);
+   Matrix::multMat(MV4, temp1, MV4);
+   Matrix::createRotateMatY(temp1, 0.5);
+   Matrix::multMat(MV4, temp1, MV4);
+   Matrix::createRotateMatZ(temp1, 0.9);
+   Matrix::multMat(MV4, temp1, MV4);
+   Matrix::createTranslateMat(temp1, -1.25, 0, -5);
+   Matrix::multMat(MV4, temp1, MV4);
+   MVs.push_back(MV4);
+   progs.push_back(prog);
+	shape = application->initGeom(resourceDir);
+   shapes.push_back(shape);
+
+
+
+
+
+
+
+
+
+
+
+      
 	// Loop until the user closes the window.
 	while (! glfwWindowShouldClose(windowManager->getHandle()))
 	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// Render scene.
-		application->render();
+      for (unsigned int i = 0; i < progs.size(); i++)
+      {
+		   application->render(progs.at(i), MVs.at(i), shapes.at(i));
+      }
 
 		// Swap front and back buffers.
 		glfwSwapBuffers(windowManager->getHandle());
