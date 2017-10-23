@@ -336,6 +336,10 @@ int main(int argc, char **argv)
    float MV5[16] = {0};
 
 	float temp1[16] = {0};
+	float temp2[16] = {0};
+	float temp3[16] = {0};
+
+
 
 
 	if (argc >= 2)
@@ -363,35 +367,73 @@ int main(int argc, char **argv)
 	// This is the code that will likely change program to program as you
 	// may need to initialize or set up different data and state
 
-	prog = application->init(resourceDir);
-   Matrix::createIdentityMat(MV1);
-   Matrix::createScaleMat(temp1, 0.2, 2.0, 0.2);
-   Matrix::multMat(MV1, temp1, MV1);
-   Matrix::createRotateMatX(temp1, 0.0);
-   Matrix::multMat(MV1, temp1, MV1);
-   Matrix::createRotateMatY(temp1, 0.7);
-   Matrix::multMat(MV1, temp1, MV1);
-   Matrix::createRotateMatZ(temp1, 0.0);
-   Matrix::multMat(MV1, temp1, MV1);
-   Matrix::createTranslateMat(temp1, -2.5, 0, -5);
-   Matrix::multMat(MV1, temp1, MV1);
+   float scale[16] = {0};
+   float rotate1[16] = {0};
+   float rotate2[16] = {0};
+   float ts1[16] = {0};
+   float rs1[16] = {0};
+   float rts1[16] = {0};
+   float trs1[16] = {0};
+   float ttrs1[16] = {0};
+   float rttrs1[16] = {0};
+	float translate1[16] = {16};
+	float translate2[16] = {16};
+
+   Matrix::createTranslateMat(translate1, 0, 0, 0);
+   Matrix::createRotateMatY(rotate2, -0.2);
+/////
+   prog = application->init(resourceDir);
+	shape = application->initGeom(resourceDir);
+
+   Matrix::createScaleMat(scale, 0.2, 2.0, 0.2);
+   Matrix::createRotateMatY(rotate1, -2.0);
+   Matrix::createTranslateMat(translate2, -2.5, 0, -8);
+
+   Matrix::multMat(rs1, rotate1, scale);
+   Matrix::multMat(trs1, translate2, rs1);
+   Matrix::multMat(ttrs1, translate1, trs1);
+//   Matrix::multMat(MV1, translate1, trs1);
+   Matrix::multMat(MV1, rotate2, ttrs1);
+
    MVs.push_back(MV1);
    progs.push_back(prog);
-	shape = application->initGeom(resourceDir);
    shapes.push_back(shape);
 
+//////
+/*
+   prog = application->init(resourceDir);
+	shape = application->initGeom(resourceDir);
+
+   Matrix::createScaleMat(scale, 0.2, 2.0, 0.2);
+   Matrix::createRotateMatY(rotate1, -2.0);
+   Matrix::createTranslateMat(translate2, -0.5, 0, -8);
+
+   Matrix::multMat(rs1, rotate1, scale);
+   Matrix::multMat(trs1, translate2, rs1);
+   Matrix::multMat(ttrs1, translate1, trs1);
+   Matrix::multMat(MV2, rotate2, ttrs1);
+
+   MVs.push_back(MV2);
+   progs.push_back(prog);
+   shapes.push_back(shape);
+*/
+/*
 	prog = application->init(resourceDir);
-   Matrix::createIdentityMat(MV2);
+   Matrix::createIdentityMat(temp1);
    Matrix::createScaleMat(temp1, 0.2, 2.0, 0.2);
-   Matrix::multMat(MV2, temp1, MV2);
-   Matrix::createRotateMatX(temp1, 0.0);
-   Matrix::multMat(MV2, temp1, MV2);
-   Matrix::createRotateMatY(temp1, 0.7);
-   Matrix::multMat(MV2, temp1, MV2);
-   Matrix::createRotateMatZ(temp1, 0.0);
-   Matrix::multMat(MV2, temp1, MV2);
-   Matrix::createTranslateMat(temp1, -.25, 0, -5);
-   Matrix::multMat(MV2, temp1, MV2);
+   Matrix::createTranslateMat(temp2, 1, 0, 0);
+   Matrix::multMat(temp3, temp2, temp1);
+   Matrix::createRotateMatX(temp1, 0.0);//
+   Matrix::multMat(temp2, temp1, temp3);
+   Matrix::createRotateMatY(temp3, 0.7);
+   Matrix::multMat(temp1, temp3, temp2);
+   Matrix::createRotateMatZ(temp2, 0.0);
+   Matrix::multMat(MV2, temp2, temp1);
+//   Matrix::createTranslateMat(temp1, -.25, 0, -5);
+//   Matrix::multMat(MV2, temp1, temp3);
+
+//   Matrix::createRotateMatY(temp3, -0.15);
+//   Matrix::multMat(MV2, temp3, temp2);
    MVs.push_back(MV2);
    progs.push_back(prog);
 	shape = application->initGeom(resourceDir);
@@ -399,17 +441,21 @@ int main(int argc, char **argv)
 
 
 	prog = application->init(resourceDir);
-   Matrix::createIdentityMat(MV3);
+   Matrix::createIdentityMat(temp1);
    Matrix::createScaleMat(temp1, 0.2, 2.0, 0.2);
-   Matrix::multMat(MV3, temp1, MV3);
-   Matrix::createRotateMatX(temp1, 0.0);
-   Matrix::multMat(MV3, temp1, MV3);
-   Matrix::createRotateMatY(temp1, 0.7);
-   Matrix::multMat(MV3, temp1, MV3);
-   Matrix::createRotateMatZ(temp1, 0.0);
-   Matrix::multMat(MV3, temp1, MV3);
-   Matrix::createTranslateMat(temp1, 2.5, 0, -5);
-   Matrix::multMat(MV3, temp1, MV3);
+   Matrix::createTranslateMat(temp2, 1, 0, 0);
+   Matrix::multMat(temp3, temp2, temp1);
+   Matrix::createRotateMatX(temp1, 0.0);//
+   Matrix::multMat(temp2, temp1, temp3);
+   Matrix::createRotateMatY(temp3, 0.7);
+   Matrix::multMat(temp1, temp3, temp2);
+   Matrix::createRotateMatZ(temp2, 0.0);
+   Matrix::multMat(MV3, temp2, temp1);
+//   Matrix::createTranslateMat(temp1, 2.5, 0, -5);
+//   Matrix::multMat(MV3, temp1, temp3);
+
+//   Matrix::createRotateMatY(temp3, -0.15);
+//   Matrix::multMat(MV3, temp3, temp2);
    MVs.push_back(MV3);
    progs.push_back(prog);
 	shape = application->initGeom(resourceDir);
@@ -417,17 +463,20 @@ int main(int argc, char **argv)
 
 
 	prog = application->init(resourceDir);
-   Matrix::createIdentityMat(MV4);
-   Matrix::createScaleMat(temp1, 0.4, 2.0, 0.4);
-   Matrix::multMat(MV4, temp1, MV4);
-   Matrix::createRotateMatX(temp1, 0.0);
-   Matrix::multMat(MV4, temp1, MV4);
-   Matrix::createRotateMatY(temp1, 0.5);
-   Matrix::multMat(MV4, temp1, MV4);
-   Matrix::createRotateMatZ(temp1, 0.9);
-   Matrix::multMat(MV4, temp1, MV4);
-   Matrix::createTranslateMat(temp1, -1.25, 0, -5);
-   Matrix::multMat(MV4, temp1, MV4);
+   Matrix::createIdentityMat(temp1);
+   Matrix::createScaleMat(temp1, 0.2, 1.8, 0.2);
+   Matrix::createTranslateMat(temp2, 1, 0, 0);
+   Matrix::multMat(temp3, temp2, temp1);
+   Matrix::createRotateMatX(temp1, 0.0);//
+   Matrix::multMat(temp2, temp1, temp3);
+   Matrix::createRotateMatY(temp3, 0.5);
+   Matrix::multMat(temp1, temp3, temp2);
+   Matrix::createRotateMatZ(temp2, 1.4);
+   Matrix::multMat(MV4, temp2, temp1);
+ //  Matrix::createTranslateMat(temp1, -1.25, 0, -5);
+ //  Matrix::multMat(MV4, temp1, temp3);
+
+
    MVs.push_back(MV4);
    progs.push_back(prog);
 	shape = application->initGeom(resourceDir);
@@ -437,7 +486,7 @@ int main(int argc, char **argv)
 
 
 
-
+*/
 
 
 
