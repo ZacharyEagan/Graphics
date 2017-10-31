@@ -147,7 +147,7 @@ public:
 		prog->init();
 		prog->addUniform("P");
 		prog->addUniform("MV");
-		prog->addUniform("roteW");
+//		prog->addUniform("roteW");
 		prog->addAttribute("vertPos");
 		prog->addAttribute("vertNor");
 
@@ -165,7 +165,9 @@ public:
       return shape;
 	}
 
-   void updateShader(const std::string& resourceDirectory, shared_ptr<Program> prog)
+   void updateShader(const std::string& resourceDirectory, shared_ptr<Program> prog, int lr)
+   {
+   if (lr == 1)
    { 
       switch (mode)
       {
@@ -179,8 +181,25 @@ public:
                   break;
 
 
+      }
+   }else
+   { 
+      switch (mode)
+      {
+         case 0: prog->setShaderNames(resourceDirectory + "/simple" + "_vert.glsl", resourceDirectory + "/simple" + "_frag.glsl");
+                  break;
+
+         case 1:prog->setShaderNames(resourceDirectory + "/rotF" + "_vert.glsl", resourceDirectory + "/rotF" + "_frag.glsl");
+                  break;
+
+         case 2:prog->setShaderNames(resourceDirectory + "/phongF" + "_vert.glsl", resourceDirectory + "/phongF" + "_frag.glsl");
+                  break;
+
+
       } 
+   }
 		    		    prog->init();
+      sig = 0;
    }
 	
    void render(const std::string& resourceDirectory, shared_ptr<Program> prog, shared_ptr<Shape> shape, float offset, int lfollow)
@@ -201,10 +220,7 @@ public:
 		P->pushMatrix();
 		P->perspective(45.0f, aspect, 0.01f, 100.0f);
 
-      if (sig)
-      {
-         updateShader(resourceDirectory, prog);
-      }
+
 
 		// Draw a stack of cubes with indiviudal transforms
 		prog->bind();
@@ -219,7 +235,7 @@ public:
 			MV->rotate(0.5 + Rotate, vec3(0, 1, 0));
 			MV->scale(vec3(1, 1, 1));
 			glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE, value_ptr(MV->topMatrix()));
-			glUniform1i(prog->getUniform("roteW"), lfollow);
+			//glUniform1i(prog->getUniform("roteW"), lfollow);
 			shape->draw(prog);
 		MV->popMatrix();
 		prog->unbind();
@@ -306,6 +322,11 @@ int main(int argc, char *argv[])
 		// Clear framebuffer.
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+      if (application->sig)
+      {
+         application->updateShader(resourceDir, prog1, 1);
+         application->updateShader(resourceDir, prog2, 2);
+      }
 		// Render scene.
 		application->render(resourceDir, prog1, shape1, 2, 0);
 		application->render(resourceDir, prog2, shape2, -2, 1);

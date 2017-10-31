@@ -13,7 +13,6 @@ void main()
 {
    float val;
    vec3 light = vec3(2.0, 2.0, 2.0);
-   light = (MV * vec4(light, 0.0)).xyz;
    vec3 lightC = vec3(0.8, 0.1, 0.4);
 	gl_Position = P * MV * vertPos;
 	fragNor = (MV * vec4(vertNor, 0.0)).xyz;

@@ -12,7 +12,7 @@ out vec3 light;
 void main()
 {
    vec3 lightT = vec3(2.0, 2.0, 2.0);
-   light = (MV *vec4(lightT, 0.0)).xyz;
+   light = lightT;
    gl_Position = P * MV * vertPos;
    fragNor = (MV*vec4(vertNor, 0.0)).xyz;   
 }
