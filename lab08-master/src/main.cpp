@@ -58,7 +58,9 @@ public:
 	int gMat = 0;
 
 	float cTheta = 0;
+	float cPhi = 0; //new4
 	bool mouseDown = false;
+   double MouseX, MouseY; //new4
 
 	void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
@@ -107,7 +109,9 @@ public:
 
    void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos) //new3
    {
-      std::cout << xpos << " " << ypos << "\n";
+      //std::cout << xpos << " " << ypos << "\n";
+      MouseX = xpos; //new4
+      MouseY = ypos; //new4
    }
 
 
@@ -305,8 +309,11 @@ public:
 			MV->loadIdentity();
 			//MV->rotate(radians(cTheta), vec3(0, 1, 0));
 			//V->loadIdentity();                              //new1//rem2
-			//V->rotate(radians(cTheta), vec3(0, 1, 0));      //new1//rem2  
-         V = glm::lookAt(glm::vec3(0,0,0), glm::vec3(cos(cTheta),0,sin(cTheta)), glm::vec3(0,1,0)); //new2 //new3
+			//V->rotate(radians(cTheta), vec3(0, 1, 0));      //new1//rem2 
+			cTheta = (MouseX / width) * M_PI; //new4
+         cPhi = (MouseY / height) * M_PI;
+         
+         V = glm::lookAt(glm::vec3(0,0,0), glm::vec3(cos(cPhi)*cos(cTheta),sin(cPhi),cos(cPhi)*sin(cTheta)), glm::vec3(0,1,0)); //new2 //new3 //new4
 		   //glUniformMatrix4fv(prog->getUniform("V"), 1,    //new1 //rem2
          //         GL_FALSE,value_ptr(V->topMatrix()) );  //new1 //rem2
 		   glUniformMatrix4fv(prog->getUniform("V"), 1,    //new2
