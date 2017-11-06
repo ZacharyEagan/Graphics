@@ -70,13 +70,13 @@ public:
 		{
 			gMat = (gMat + 1) % 4;
 		}
-		else if (key == GLFW_KEY_A && action == GLFW_PRESS)
+		else if (key == GLFW_KEY_A && (action == GLFW_PRESS || action == 2)) //new2
 		{
-			cTheta += 5;
+			cTheta += (1 / (10 * 2 * M_PI)); //new2
 		}
-		else if (key == GLFW_KEY_D && action == GLFW_PRESS)
+		else if (key == GLFW_KEY_D && (action == GLFW_PRESS || action == 2)) //new2
 		{
-			cTheta -= 5;
+			cTheta -= (1 / (10 * 2 * M_PI)); //new2
 		}
 	}
 
@@ -133,6 +133,7 @@ public:
 			exit(1);
 		}
 		prog->addUniform("P");
+		prog->addUniform("V");           //new1
 		prog->addUniform("MV");
 		prog->addUniform("MatAmb");
 		prog->addUniform("MatDif");
@@ -281,6 +282,8 @@ public:
 
 		// Create the matrix stacks
 		auto P = make_shared<MatrixStack>();
+		//auto V = make_shared<MatrixStack>();      //new1 //rem2
+		glm::mat4 V;      //new2
 		auto MV = make_shared<MatrixStack>();
 		// Apply perspective projection.
 		P->pushMatrix();
@@ -293,7 +296,14 @@ public:
 		// globl transforms for 'camera' (you will fix this now!)
 		MV->pushMatrix();
 			MV->loadIdentity();
-			MV->rotate(radians(cTheta), vec3(0, 1, 0));
+			//MV->rotate(radians(cTheta), vec3(0, 1, 0));
+			//V->loadIdentity();                              //new1//rem2
+			//V->rotate(radians(cTheta), vec3(0, 1, 0));      //new1//rem2  
+         V = glm::lookAt(glm::vec3(0,0,0), glm::vec3(cos(cTheta),0,sin(cTheta)), glm::vec3(0,1,0)); //new2 //new3
+		   //glUniformMatrix4fv(prog->getUniform("V"), 1,    //new1 //rem2
+         //         GL_FALSE,value_ptr(V->topMatrix()) );  //new1 //rem2
+		   glUniformMatrix4fv(prog->getUniform("V"), 1,    //new2
+                  GL_FALSE,value_ptr(V) );  //new2
 
 			float tx, tz, theta = 0;
 			for (int i = 0; i < 10; i++)
