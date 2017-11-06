@@ -176,7 +176,9 @@ public:
 		texProg->setVerbose(true);
 		texProg->setShaderNames(
 			resourceDirectory + "/pass_vert.glsl",
-			resourceDirectory + "/tex_fragH.glsl");
+			//resourceDirectory + "/tex_fragH.glsl"); //rem 5
+			//resourceDirectory + "/tex_frag.glsl"); //new/rem5
+			resourceDirectory + "/tex_fragF.glsl"); //new 5
 		if (! texProg->init())
 		{
 			std::cerr << "One or more shaders failed to compile... exiting!" << std::endl;
