@@ -102,9 +102,16 @@ public:
 			Moving = false;
 			mouseDown = false;
 		}
+      
 	}
 
-	void resizeCallback(GLFWwindow *window, int width, int height)
+   void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos) //new3
+   {
+      std::cout << xpos << " " << ypos << "\n";
+   }
+
+
+	void resizeCallback(GLFWwindow *window, int width, int height) 
 	{
 		glViewport(0, 0, width, height);
 	}
