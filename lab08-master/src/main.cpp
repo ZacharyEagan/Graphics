@@ -314,8 +314,14 @@ public:
 			//V->rotate(radians(cTheta), vec3(0, 1, 0));      //new1//rem2 
 			cTheta = (MouseX / width) * M_PI; //new4
          cPhi = (MouseY / height) * M_PI;
-         
-         V = glm::lookAt(glm::vec3(0,0,0), glm::vec3(cos(cPhi)*cos(cTheta),sin(cPhi),cos(cPhi)*sin(cTheta)), glm::vec3(0,1,0)); //new2 //new3 //new4
+         if (cPhi > (M_PI * (3.0/4.0)))
+            cPhi = (M_PI * (3.0/4.0));
+         if (cPhi < -(M_PI * (3.0/4.0)))
+            cPhi = -(M_PI * (3.0/4.0));
+         //std::cout << cPhi << "\n";         
+
+
+         V = glm::lookAt(glm::vec3(0,0,0), glm::vec3(cos(cPhi)*cos(cTheta),sin(cPhi),cos(cPhi)*sin(cTheta)), glm::vec3(0,1,0)); //new6
 		   //glUniformMatrix4fv(prog->getUniform("V"), 1,    //new1 //rem2
          //         GL_FALSE,value_ptr(V->topMatrix()) );  //new1 //rem2
 		   glUniformMatrix4fv(prog->getUniform("V"), 1,    //new2
