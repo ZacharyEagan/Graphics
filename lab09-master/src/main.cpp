@@ -34,6 +34,7 @@ public:
 	std::shared_ptr<Program> prog;
 	std::shared_ptr<Program> texProg;
 	std::shared_ptr<Program> tex1Prog;
+	std::shared_ptr<Program> tex2Prog;
 
 	// Shapes to be used (from obj file)
 	std::vector<shared_ptr<Shape>> AllShapes;
@@ -59,6 +60,7 @@ public:
 	shared_ptr<Texture> texture0;
  	shared_ptr<Texture> texture1;
  	shared_ptr<Texture> texture2;
+ 	shared_ptr<Texture> texture3;
 
 	int gMat = 0;
 
@@ -224,6 +226,26 @@ public:
 		tex1Prog->addAttribute("vertNor");
 		tex1Prog->addAttribute("vertTex");
 		tex1Prog->addUniform("Texture0");
+
+
+
+
+		tex2Prog = make_shared<Program>();
+		tex2Prog->setVerbose(true);
+		tex2Prog->setShaderNames(
+			resourceDirectory + "/tex_vert.glsl",
+			resourceDirectory + "/tex_frag2.glsl");
+		if (!tex2Prog->init())
+		{
+			std::cerr << "One or more shaders failed to compile... exiting!" << std::endl;
+			exit(1);
+		}
+ 		tex2Prog->addUniform("P");
+		tex2Prog->addUniform("MV");
+		tex2Prog->addAttribute("vertPos");
+		tex2Prog->addAttribute("vertNor");
+		tex2Prog->addAttribute("vertTex");
+		tex2Prog->addUniform("Texture0");
 	 }
 
 	void initGeom(const std::string& resourceDirectory)
@@ -324,6 +346,8 @@ public:
 		// now read in the sphere for the world
 		rc = tinyobj::LoadObj(TOshapes, objMaterials, errStr,
 						(resourceDirectory + "/sphere.obj").c_str());
+//		rc = tinyobj::LoadObj(TOshapes, objMaterials, errStr,
+//						(resourceDirectory + "/justinscar.obj").c_str());
 
 		world =  make_shared<Shape>();
 		world->createShape(TOshapes[0]);
@@ -348,6 +372,8 @@ public:
 		// now read in the Nefertiti model
 		rc = tinyobj::LoadObj(TOshapes, objMaterials, errStr,
 						(resourceDirectory + "/Nefertiti-100K.obj").c_str());
+//		rc = tinyobj::LoadObj(TOshapes, objMaterials, errStr,
+//						(resourceDirectory + "/justinscar.obj").c_str());
 
 		Nef = make_shared<Shape>();
 		Nef->createShape(TOshapes[0]);
@@ -568,6 +594,27 @@ public:
 		MV->popMatrix();
 		P->popMatrix();
 		tex1Prog->unbind();
+
+
+//		tex2Prog->bind();
+//		glUniformMatrix4fv(tex2Prog->getUniform("P"), 1, GL_FALSE, value_ptr(P->topMatrix()));
+
+//		MV->pushMatrix();
+//			MV->loadIdentity();
+//			MV->rotate(radians(cTheta), vec3(0, 1, 0));
+//
+//			/* draw right mesh */
+//			MV->pushMatrix();
+//			MV->translate(vec3(2, 0.f, -5));
+//			MV->scale(gDScale);
+//			MV->translate(-1.0f*gDTrans);
+//			MV->rotate(rTheta, vec3(0, 1, 0));
+//         rTheta += 0.01;
+//			glUniformMatrix4fv(tex2Prog->getUniform("MV"), 1, GL_FALSE,value_ptr(MV->topMatrix()) );
+//			texture3->bind(tex2Prog->getUniform("Texture0"));
+//			world->draw(tex2Prog);
+//			MV->popMatrix();
+  //    tex2Prog->unbind();
 	}
 
 	// helper function to set materials for shading

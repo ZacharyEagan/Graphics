@@ -6,7 +6,7 @@ in float dCo;
 out vec4 Outcolor;
 
 void main() {
-  vec4 texColor0 = texture(Texture0, vTexCoord);
+  vec4 texColor0 = texture(Texture0, (vTexCoord*2));
  
    if (texColor0.r > 0.2)
       texColor0.r = 0.0;
