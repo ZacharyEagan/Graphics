@@ -33,6 +33,7 @@ public:
 	// Our shader program
 	std::shared_ptr<Program> prog;
 	std::shared_ptr<Program> texProg;
+	std::shared_ptr<Program> tex1Prog;
 
 	// Shapes to be used (from obj file)
 	std::vector<shared_ptr<Shape>> AllShapes;
@@ -70,6 +71,13 @@ public:
 	//transforms for the world
 	vec3 gDTrans = vec3(0);
 	float gDScale = 1.0;
+   float rTheta = 0;
+
+	//transforms for the world
+	vec3 gDBTrans = vec3(0);
+	float gDBScale = 1.0;
+	std::vector<vec3> gDBVTrans;
+	std::vector<float> gDBVScale;
 
 	float cTheta = 0;
 	bool mouseDown = false;
@@ -186,7 +194,7 @@ public:
 		texProg->setVerbose(true);
 		texProg->setShaderNames(
 			resourceDirectory + "/tex_vert.glsl",
-			resourceDirectory + "/tex_frag0.glsl");
+			resourceDirectory + "/tex_frag1.glsl");
 		if (! texProg->init())
 		{
 			std::cerr << "One or more shaders failed to compile... exiting!" << std::endl;
@@ -198,6 +206,24 @@ public:
 		texProg->addAttribute("vertNor");
 		texProg->addAttribute("vertTex");
 		texProg->addUniform("Texture0");
+
+
+		tex1Prog = make_shared<Program>();
+		tex1Prog->setVerbose(true);
+		tex1Prog->setShaderNames(
+			resourceDirectory + "/tex_vert.glsl",
+			resourceDirectory + "/tex_frag2.glsl");
+		if (!tex1Prog->init())
+		{
+			std::cerr << "One or more shaders failed to compile... exiting!" << std::endl;
+			exit(1);
+		}
+ 		tex1Prog->addUniform("P");
+		tex1Prog->addUniform("MV");
+		tex1Prog->addAttribute("vertPos");
+		tex1Prog->addAttribute("vertNor");
+		tex1Prog->addAttribute("vertTex");
+		tex1Prog->addUniform("Texture0");
 	 }
 
 	void initGeom(const std::string& resourceDirectory)
@@ -224,6 +250,10 @@ public:
 			vec3 Gmin, Gmax;
 			Gmin = vec3(std::numeric_limits<float>::max());
 			Gmax = vec3(-std::numeric_limits<float>::max());
+         shared_ptr<Shape> shpe;
+         vec3 min = vec3(0);
+         vec3 max = vec3(0);
+         vec3 temp = vec3(0);
 			for (size_t i = 0; i < TOshapes.size(); i++)
 			{
 				// TODO -- Initialize each mesh
@@ -232,10 +262,61 @@ public:
 				// 3. measure each shape to find out its AABB
 				// 4. call init on each shape to create the GPU data
 				// perform some record keeping to keep track of global min and max
+		      shpe =  make_shared<Shape>();
+		      shpe->createShape(TOshapes[i]);
+		      shpe->measure();
+      		shpe->init();
+            AllShapes.push_back(shpe);
+		      gDBVTrans.push_back( shpe->min + 0.5f*(shpe->max -shpe->min));
+		      if (shpe->max.x > shpe->max.y && shpe->max.x > shpe->max.z)
+		      {
+			      gDBVScale.push_back(2.0/(shpe->max.x-shpe->min.x));
+		      }
+		      else if (shpe->max.y > shpe->max.x && shpe->max.y > shpe->max.z)
+		      {
+			      gDBVScale.push_back(2.0/(shpe->max.y-shpe->min.y));
+		      }
+		      else
+		      {
+		   	   gDBVScale.push_back(2.0/(shpe->max.z-shpe->min.z));
+		      }
 
+            temp = shpe->min;
+            printf("temp.x: %f, max.x: %f\n", temp.x, max.x);
+
+            if (temp.x < min.x)
+               min.x = temp.x;
+            if (temp.y < min.y)
+               min.y = temp.y;
+            if (temp.z < min.z)
+               min.z = temp.z;
+
+            temp = shpe->max;
+            if (temp.y > max.y)
+               max.y = temp.y;
+            if (temp.x > max.x)
+               max.x = temp.x;
+            if (temp.z > max.z)
+               max.z = temp.z;
+            
 				// Add the shape to AllShapes
 			}
 
+         printf("minx: %f, miny: %f, minz: %f,  maxx: %f, maxy: %f, maxz: %f\n", min.x, min.y, min.z, max.x, max.y, max.z);
+		   gDBTrans = min + 0.5f*(max - min);
+		   if (max.x >max.y && max.x > max.z)
+		   {
+			   gDBScale = 2.0/(max.x-min.x);
+		   }
+		   else if (max.y > max.x && max.y > max.z)
+		   {
+			   gDBScale = 2.0/(max.y-min.y);
+		   }
+		   else
+		   {
+		   	gDBScale = 2.0/(max.z-min.z);
+		   }
+         printf ("a\n");
 			// think about scale and translate....
 			// based on the results of calling measure on each peice
 		}
@@ -415,6 +496,43 @@ public:
 		// TODO add code for the transforms for the dummy and loop over
 		// all the shapes in the dummy to draw it
 
+		prog->bind();
+		glUniformMatrix4fv(prog->getUniform("P"), 1, GL_FALSE, value_ptr(P->topMatrix()));
+
+		// globle transforms for 'camera' (you will likely wantt to fix this)
+		MV->pushMatrix();
+			MV->loadIdentity();
+			MV->rotate(radians(cTheta), vec3(0, 1, 0));
+			   MV->rotate(radians(-25.f), vec3(0, 1, 0));
+			   MV->pushMatrix();
+		   	MV->translate(vec3(-2, 0.f, -5));
+			   MV->scale(gDBScale);
+			   MV->rotate(radians(-90.f), vec3(1, 0, 0));
+
+			//   MV->translate(-1.0f*gDBTrans);
+
+			for (size_t i = 0; i < AllShapes.size();i++)
+         {
+			   /* draw left mesh */
+            MV->pushMatrix();
+			  // MV->translate(vec3(-2, (float)i/2.0, -5));
+			   //MV->rotate(radians(-90.f), vec3(1, 0, 0));
+			   //MV->translate(-1.0f*gDBVTrans.at(i));
+			   //MV->scale(gDBVScale.at(i));
+
+			   SetMaterial(2);
+			   glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE,value_ptr(MV->topMatrix()) );
+
+            AllShapes[i]->draw(prog);
+            MV->popMatrix();
+         }
+            MV->popMatrix();
+		MV->popMatrix();
+
+
+
+
+
 		MV->popMatrix();
 		prog->unbind();
 
@@ -430,19 +548,26 @@ public:
 			MV->translate(vec3(2, 0.f, -5));
 			MV->scale(gDScale);
 			MV->translate(-1.0f*gDTrans);
+			MV->rotate(rTheta, vec3(0, 1, 0));
+         rTheta += 0.01;
 			glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE,value_ptr(MV->topMatrix()) );
 			texture1->bind(texProg->getUniform("Texture0"));
 			world->draw(texProg);
 			MV->popMatrix();
-
+      texProg->unbind();
+      tex1Prog->bind();
 			/*draw the ground */
+		   glUniformMatrix4fv(texProg->getUniform("P"), 1, GL_FALSE, value_ptr(P->topMatrix()));
 			glUniformMatrix4fv(texProg->getUniform("MV"), 1, GL_FALSE,value_ptr(MV->topMatrix()) );
 			texture2->bind(texProg->getUniform("Texture0"));
+         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_REPEAT);
 			renderGround();
 
 		MV->popMatrix();
 		P->popMatrix();
-		texProg->unbind();
+		tex1Prog->unbind();
 	}
 
 	// helper function to set materials for shading
@@ -496,6 +621,9 @@ int main(int argc, char **argv)
 
 	application->init(resourceDir);
 	application->initGeom(resourceDir);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   glEnable(GL_BLEND);
 
 	// Loop until the user closes the window.
 	while (! glfwWindowShouldClose(windowManager->getHandle()))
