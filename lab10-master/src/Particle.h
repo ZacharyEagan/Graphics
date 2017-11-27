@@ -41,7 +41,7 @@ private:
 	float m = 1.f; // mass
 	float d = 0.f; // viscous damping
 	glm::vec3 x = glm::vec3(0.f); // position
-	glm::vec3 v = glm::vec3(0.f); // velocity
+	glm::vec3 v = glm::vec3(0.0,0.1,0.0); // velocity
 	float lifespan = 1.f; // how long this particle lives
 	float tEnd = 0.f;     // time this particle dies
 	float scale = 1.f;

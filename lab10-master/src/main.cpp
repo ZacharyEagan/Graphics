@@ -34,8 +34,11 @@ public:
 
 	// Our shader program
 	std::shared_ptr<Program> prog;
+   std::shared_ptr<Program> progL;
 
 	std::vector<std::shared_ptr<Particle>> particles;
+   std::shared_ptr<Shape> Lamp;
+
 
 	// CPU array for particles - redundant with particle structure
 	// but simple
@@ -125,6 +128,27 @@ public:
 		CHECKED_GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		CHECKED_GL_CALL(glPointSize(14.0f));
 
+
+      progL = make_shared<Program>();
+      progL->setVerbose(true);
+     // progL->setShaderNames(resourceDirectory + "/simple_vert.glsl",
+      //                      resourceDirectory + "/simple_frag.glsl");
+      progL->setShaderNames(resourceDirectory + "/bp_vert.glsl",
+                            resourceDirectory + "/bp_frag.glsl");
+      progL->init();
+      progL->addUniform("P");
+      progL->addUniform("MV");
+      progL->addUniform("LP");
+      progL->addUniform("LC");
+      progL->addUniform("MatAmb");
+      progL->addUniform("MatDif");
+      progL->addUniform("MatSpec");
+      progL->addUniform("shine");
+      progL->addAttribute("vertPos");
+      progL->addAttribute("vertNor");
+
+
+
 		// Initialize the GLSL program.
 		prog = make_shared<Program>();
 		prog->setVerbose(true);
@@ -155,17 +179,30 @@ public:
 	void initParticles()
 	{
 		int n = numP;
-
+      t = 0.f;
 		for (int i = 0; i < n; ++ i)
 		{
 			auto particle = make_shared<Particle>();
 			particles.push_back(particle);
 			particle->load();
 		}
+      for (int i = 100; i--;)
+      {
+         updateParticles();
+         updateGeom();
+      }
 	}
 
 	void initGeom(const std::string& resourceDirectory)
 	{
+
+      Lamp = make_shared<Shape>();
+      Lamp->loadMesh("../resources/lamp.obj");
+      Lamp->measure();
+      Lamp->resize();
+      Lamp->init();
+
+
 		// generate the VAO
 		CHECKED_GL_CALL(glGenVertexArrays(1, &VertexArrayID));
 		CHECKED_GL_CALL(glBindVertexArray(VertexArrayID));
@@ -264,7 +301,40 @@ public:
 		// camera rotate
 		MV->rotate(camRot, vec3(0, 1, 0));
 
+      MV->pushMatrix();
+      MV->translate(vec3(0,0,-5));
+      MV->scale(vec3(1.0,1.0,1.0));
+      
+      progL->bind();
+      glUniformMatrix4fv(progL->getUniform("P"), 1, GL_FALSE, value_ptr(P->topMatrix()));
+      glUniformMatrix4fv(progL->getUniform("MV"), 1, GL_FALSE, value_ptr(MV->topMatrix()));
+
+
+         glUniform3f(progL->getUniform("LC"),
+                                0.3,
+                                 0.3,
+                                 0.3);
+         glUniform3f(progL->getUniform("LP"), 0.17 , 0.315 ,-5 );
+         glUniform3f(progL->getUniform("MatAmb"), 0.1f, 0.1f, 0.1f);
+         glUniform3f(progL->getUniform("MatDif"), 0.2f, 0.2f, 0.2f);
+         glUniform3f(progL->getUniform("MatSpec"), 0.001, 0.001, 0.001);
+         glUniform1f(progL->getUniform("shine"), 0.0);
+ 
+
+
+
+
+      Lamp->draw(progL);
+      progL->unbind();
+      MV->popMatrix();
+
+
+
+      
 		// Draw
+      MV->pushMatrix();
+      MV->translate(vec3(0.17,0.415,-5));
+ 
 		prog->bind();
 		updateParticles();
 		updateGeom();
@@ -294,6 +364,11 @@ public:
 
 		// Pop matrix stacks.
 		MV->popMatrix();
+      
+
+
+
+      MV->popMatrix();
 		P->popMatrix();
 	}
 

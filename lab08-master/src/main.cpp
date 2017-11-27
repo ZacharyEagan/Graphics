@@ -128,7 +128,7 @@ public:
 
 		cTheta = 0;
 		// Set background color.
-		glClearColor(.12f, .34f, .56f, 1.0f);
+		glClearColor(0.0f, .0f, .0f, 1.0f);
 		// Enable z-buffer test.
 		glEnable(GL_DEPTH_TEST);
 
@@ -193,7 +193,7 @@ public:
 	{
 		// Initialize the obj mesh VBOs etc
 		shape = make_shared<Shape>();
-		shape->loadMesh(resourceDirectory + "/Nefertiti-100K.obj");
+		shape->loadMesh(resourceDirectory + "/sphere.obj");
 		shape->resize();
 		shape->init();
 		//Initialize the geometry to render a quad to the screen
@@ -384,9 +384,13 @@ public:
 			glUniform3f(prog->getUniform("MatDif"), 0.0f, 0.16f, 0.9f);
 			break;
 		case 1: // flat grey
-			glUniform3f(prog->getUniform("MatAmb"), 0.13f, 0.13f, 0.14f);
-			glUniform3f(prog->getUniform("MatDif"), 0.3f, 0.3f, 0.4f);
+			glUniform3f(prog->getUniform("MatAmb"), 0.4f, 0.4f, 0.4f);
+			glUniform3f(prog->getUniform("MatDif"), 0.4f, 0.4f, 0.4f);
 			break;
+		//case 1: // flat grey
+	//		glUniform3f(prog->getUniform("MatAmb"), 0.13f, 0.13f, 0.14f);
+//			glUniform3f(prog->getUniform("MatDif"), 0.3f, 0.3f, 0.4f);
+//			break;
 		case 2: //brass
 			glUniform3f(prog->getUniform("MatAmb"), 0.3294f, 0.2235f, 0.02745f);
 			glUniform3f(prog->getUniform("MatDif"), 0.7804f, 0.5686f, 0.11373f);
