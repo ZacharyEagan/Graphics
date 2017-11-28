@@ -1,3 +1,0 @@
-/home/bill/class/Graphics/p2b/p2b/bin/CMakeFiles/edit_cache.dir
-/home/bill/class/Graphics/p2b/p2b/bin/CMakeFiles/rebuild_cache.dir
-/home/bill/class/Graphics/p2b/p2b/bin/CMakeFiles/P2b.dir
