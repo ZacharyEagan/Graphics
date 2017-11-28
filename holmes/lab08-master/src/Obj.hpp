@@ -32,20 +32,28 @@ private:
    glm::vec3 scl = glm::vec3(1.f,1.f,1.f);
    glm::mat4 p;
    glm::mat4 v;
+   double alpha;
+   glm::vec3 light = glm::vec3(0);
    double mass = 1.f;
      
 public:
    void init(std::string model);
    void set_lower(glm::vec3 bound);
    void set_upper(glm::vec3 bound);
-   void set_colort(int col);
+   void set_color(int col);
    void set_scale(glm::vec3 scale);
    void set_force(glm::vec3 f);
    void set_mass(double ms); 
    void set_pos(glm::vec3 ps);
+   void set_light(glm::vec3 lght);
+    
    void set_zero();
+   void set_mat(int i);
    void bind();
    void unbind();
+
+   glm::vec3 get_pos();
+   glm::vec3 get_light();
 
    void update(double dt);
    void draw(glm::mat4 P, glm::mat4 V);
