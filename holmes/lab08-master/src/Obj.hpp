@@ -28,13 +28,18 @@ private:
    glm::vec3 force = glm::vec3(0.f,-9.8,0.f);          
    glm::vec3 vel = glm::vec3(0.f,0.f,0.f);
    glm::vec3 pos = glm::vec3(0.f,9.f,0.f);
+   glm::vec3 Lpos = glm::vec3(0.f,9.f,0.f);
    glm::vec3 zero = glm::vec3(0.f,0.f,0.f);
    glm::vec3 scl = glm::vec3(1.f,1.f,1.f);
    glm::mat4 p;
    glm::mat4 v;
    double alpha;
+  
    glm::vec3 light = glm::vec3(0);
    double mass = 1.f;
+   int ars = 4;
+   GLfloat bulbC[12] = {0};
+   GLfloat bulbP[12] = {0};
      
 public:
    void init(std::string model);
@@ -46,15 +51,18 @@ public:
    void set_mass(double ms); 
    void set_pos(glm::vec3 ps);
    void set_light(glm::vec3 lght);
+   void set_lights(std::vector<std::shared_ptr<Obj>> lights);
+   void print_lights();   
     
    void set_zero();
    void set_mat(int i);
    void bind();
    void unbind();
 
-   glm::vec3 get_pos();
-   glm::vec3 get_light();
+    glm::vec3 get_pos();
+    glm::vec3 get_light();
+    glm::vec3 get_light_pos();
 
    void update(double dt);
-   void draw(glm::mat4 P, glm::mat4 V);
+   void draw(glm::mat4 P, glm::mat4 V, glm::vec3 LP);
 };

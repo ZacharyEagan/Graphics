@@ -6,15 +6,20 @@ uniform mat4 P;
 uniform mat4 MV;
 
 uniform mat4 V; //new1
-
+//uniform vec3 VP;
 
 out vec3 fragNor;
 out vec3 eye;
+out vec4 pos;
+
 
 void main()
 {
-   gl_Position = P * V * MV * vertPos;
-   eye = (V * MV * vertPos).xyz;
+   vec4 position = P * V * MV * vertPos;
+   gl_Position = position;
+   pos = MV * vertPos;
+   eye = vec3(V[3][0],V[3][1],V[3][2]);
+   //eye = normalize(-pos).xyz;
    fragNor = (MV*vec4(vertNor, 0.0)).xyz;
 }
 

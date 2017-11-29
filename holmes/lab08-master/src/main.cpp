@@ -228,10 +228,10 @@ public:
 	{  
       //std::cout <<" init Geom\n";
       test = make_shared<Obj>();
-      test->init("../resources/lamp.obj");
-      test->set_scale(glm::vec3(4,3.3,4));
-      test->set_pos(glm::vec3(16,20,10));
-      test->set_color(5);
+      test->init("../resources/sphere.obj");
+      test->set_scale(glm::vec3(2.0,2.0,2.0));
+      test->set_pos(glm::vec3(4.f,10.f,4.f));
+      test->set_color(0);
       gnd = make_shared<Obj>();
       gnd->init("../resources/cube.obj");
       gnd->set_scale(glm::vec3(50,30,50));
@@ -242,11 +242,11 @@ public:
       test->set_zero();
 
       std::shared_ptr<Obj> lmp, blb;
-      for (int i = 0; i < 20; i++)
+      for (int i = 0; i < 4; i++)
       {
          lmp = make_shared<Obj>();
          lmp->init("../resources/lamp.obj");
-         lmp->set_scale(glm::vec3(4,3.3,4));
+         lmp->set_scale(glm::vec3(4,2.2,4));
          lmp->set_pos(glm::vec3(0,20,i * 2.f));
          lmp->set_color(5);
          lmp->set_zero();
@@ -254,14 +254,19 @@ public:
 
          blb = make_shared<Obj>();
          blb->init("../resources/sphere.obj");
-         blb->set_scale(glm::vec3(0.2,0.5,0.2));
-         blb->set_pos(glm::vec3(0.8,4.4,i * 2.f));
+         blb->set_scale(glm::vec3(0.18,0.26,0.18));
+         blb->set_pos(glm::vec3(0.7,2.9,i * 2.f));
          blb->set_color(4);
          blb->set_zero();
-         blb->set_force(glm::vec3(0));
-         blb->set_light(glm::vec3(1.0,0.8,0.7));
+         blb->set_force(glm::vec3(0.f,0.f,0.f));
+         blb->set_light(glm::vec3(0.2f,0.1f,0.006f));
          Bulb.push_back(blb);
          
+      }
+
+      for (int i = 0; i < 4; i++)
+      {
+
       }
 	}
 
@@ -344,9 +349,20 @@ public:
       if (cPhi < -(M_PI * (3.0/4.0)))
          cPhi = -(M_PI * (3.0/4.0));
 
+      glm::vec3 LP = glm::vec3(locX, locY, locZ);
       V = glm::lookAt(glm::vec3(locX,locY,locZ), 
             glm::vec3(cos(cPhi)*cos(cTheta)+locX,sin(cPhi) + locY,
             cos(cPhi)*sin(cTheta) + locZ), glm::vec3(0,1,0));   
+      std::cout << "V: ";
+      for (int i = 0; i < 4; i++)
+      {
+         for (int j = 0; j < 4; j++)
+         {
+            std::cout << V[i][j] << " ";
+         }
+         std::cout << "\n";
+      } 
+      std::cout << "\n\n";
       // Clear framebuffer.
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -354,19 +370,27 @@ public:
       // Apply perspective projection.
       P->pushMatrix();
       P->perspective(45.0f, aspect, 0.01f, 100.0f);
+      test->set_lights(Bulb);
+      gnd->set_lights(Bulb);
+      gnd->print_lights();
       test->update(0.1);
-      test->draw(P->topMatrix(), V);
+      test->draw(P->topMatrix(), V, LP);
       gnd->update(0.1);
-      gnd->draw(P->topMatrix(), V);
+      gnd->draw(P->topMatrix(), V, LP);
 
+     
 
-
-      for (int i = 0; i < 20; i++)
+      for (int i = 0; i < 4; i++)
       {
+         Lamp.at(i)->set_lights(Bulb);
+         Bulb.at(i)->set_lights(Bulb);
+
          Lamp.at(i)->update(0.1);
-         Lamp.at(i)->draw(P->topMatrix(), V);
+
+         Lamp.at(i)->draw(P->topMatrix(), V, LP);
+
          Bulb.at(i)->update(0.1);
-         Bulb.at(i)->draw(P->topMatrix(), V);
+         Bulb.at(i)->draw(P->topMatrix(), V, LP);
          
       }
 	}
