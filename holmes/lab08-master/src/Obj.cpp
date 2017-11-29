@@ -47,7 +47,10 @@ void Obj::set_force(glm::vec3 f)
    force = f;
 }
 //void set_mass(double ms); 
-//void set_pos(gl::vec3 ps);
+//void Obj::set_pos(glm::vec3 ps)
+//{
+//   pos = ps;
+//}
 
 void Obj::update(double dt)
 {
@@ -216,6 +219,10 @@ glUniform3f(prog->getUniform("MatAmb"), 0.0f, 0.0f, 0.0f);
 }
 
 
+glm::vec3 Obj::get_vel()
+{
+   return vel;
+}
 
 glm::vec3 Obj::get_pos()
 {

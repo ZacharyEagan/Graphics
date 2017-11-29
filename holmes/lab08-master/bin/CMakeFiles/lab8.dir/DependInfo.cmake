@@ -19,6 +19,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/bill/class/Graphics/holmes/lab08-master/src/GLTextureWriter.cpp" "/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o"
   "/home/bill/class/Graphics/holmes/lab08-master/src/MatrixStack.cpp" "/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles/lab8.dir/src/MatrixStack.cpp.o"
   "/home/bill/class/Graphics/holmes/lab08-master/src/Obj.cpp" "/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles/lab8.dir/src/Obj.cpp.o"
+  "/home/bill/class/Graphics/holmes/lab08-master/src/Particle.cpp" "/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles/lab8.dir/src/Particle.cpp.o"
+  "/home/bill/class/Graphics/holmes/lab08-master/src/Parts.cpp" "/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles/lab8.dir/src/Parts.cpp.o"
   "/home/bill/class/Graphics/holmes/lab08-master/src/Program.cpp" "/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles/lab8.dir/src/Program.cpp.o"
   "/home/bill/class/Graphics/holmes/lab08-master/src/Shape.cpp" "/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles/lab8.dir/src/Shape.cpp.o"
   "/home/bill/class/Graphics/holmes/lab08-master/src/Texture.cpp" "/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles/lab8.dir/src/Texture.cpp.o"

@@ -60,6 +60,7 @@ public:
    void unbind();
 
     glm::vec3 get_pos();
+    glm::vec3 get_vel();
     glm::vec3 get_light();
     glm::vec3 get_light_pos();
 

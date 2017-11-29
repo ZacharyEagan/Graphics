@@ -258,6 +258,60 @@ src/Obj.cpp.s:
 	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/src/Obj.cpp.s
 .PHONY : src/Obj.cpp.s
 
+src/Particle.o: src/Particle.cpp.o
+
+.PHONY : src/Particle.o
+
+# target to build an object file
+src/Particle.cpp.o:
+	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/src/Particle.cpp.o
+.PHONY : src/Particle.cpp.o
+
+src/Particle.i: src/Particle.cpp.i
+
+.PHONY : src/Particle.i
+
+# target to preprocess a source file
+src/Particle.cpp.i:
+	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/src/Particle.cpp.i
+.PHONY : src/Particle.cpp.i
+
+src/Particle.s: src/Particle.cpp.s
+
+.PHONY : src/Particle.s
+
+# target to generate assembly for a file
+src/Particle.cpp.s:
+	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/src/Particle.cpp.s
+.PHONY : src/Particle.cpp.s
+
+src/Parts.o: src/Parts.cpp.o
+
+.PHONY : src/Parts.o
+
+# target to build an object file
+src/Parts.cpp.o:
+	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/src/Parts.cpp.o
+.PHONY : src/Parts.cpp.o
+
+src/Parts.i: src/Parts.cpp.i
+
+.PHONY : src/Parts.i
+
+# target to preprocess a source file
+src/Parts.cpp.i:
+	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/src/Parts.cpp.i
+.PHONY : src/Parts.cpp.i
+
+src/Parts.s: src/Parts.cpp.s
+
+.PHONY : src/Parts.s
+
+# target to generate assembly for a file
+src/Parts.cpp.s:
+	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/src/Parts.cpp.s
+.PHONY : src/Parts.cpp.s
+
 src/Program.o: src/Program.cpp.o
 
 .PHONY : src/Program.o
@@ -417,6 +471,12 @@ help:
 	@echo "... src/Obj.o"
 	@echo "... src/Obj.i"
 	@echo "... src/Obj.s"
+	@echo "... src/Particle.o"
+	@echo "... src/Particle.i"
+	@echo "... src/Particle.s"
+	@echo "... src/Parts.o"
+	@echo "... src/Parts.i"
+	@echo "... src/Parts.s"
 	@echo "... src/Program.o"
 	@echo "... src/Program.i"
 	@echo "... src/Program.s"

@@ -81,9 +81,33 @@ CMakeFiles/lab8.dir/src/Obj.cpp.o.provides: CMakeFiles/lab8.dir/src/Obj.cpp.o.re
 CMakeFiles/lab8.dir/src/Obj.cpp.o.provides.build: CMakeFiles/lab8.dir/src/Obj.cpp.o
 
 
+CMakeFiles/lab8.dir/src/Particle.cpp.o: CMakeFiles/lab8.dir/flags.make
+CMakeFiles/lab8.dir/src/Particle.cpp.o: ../src/Particle.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lab8.dir/src/Particle.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/Particle.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/Particle.cpp
+
+CMakeFiles/lab8.dir/src/Particle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lab8.dir/src/Particle.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/bill/class/Graphics/holmes/lab08-master/src/Particle.cpp > CMakeFiles/lab8.dir/src/Particle.cpp.i
+
+CMakeFiles/lab8.dir/src/Particle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lab8.dir/src/Particle.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/bill/class/Graphics/holmes/lab08-master/src/Particle.cpp -o CMakeFiles/lab8.dir/src/Particle.cpp.s
+
+CMakeFiles/lab8.dir/src/Particle.cpp.o.requires:
+
+.PHONY : CMakeFiles/lab8.dir/src/Particle.cpp.o.requires
+
+CMakeFiles/lab8.dir/src/Particle.cpp.o.provides: CMakeFiles/lab8.dir/src/Particle.cpp.o.requires
+	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/src/Particle.cpp.o.provides.build
+.PHONY : CMakeFiles/lab8.dir/src/Particle.cpp.o.provides
+
+CMakeFiles/lab8.dir/src/Particle.cpp.o.provides.build: CMakeFiles/lab8.dir/src/Particle.cpp.o
+
+
 CMakeFiles/lab8.dir/src/MatrixStack.cpp.o: CMakeFiles/lab8.dir/flags.make
 CMakeFiles/lab8.dir/src/MatrixStack.cpp.o: ../src/MatrixStack.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lab8.dir/src/MatrixStack.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/lab8.dir/src/MatrixStack.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/MatrixStack.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/MatrixStack.cpp
 
 CMakeFiles/lab8.dir/src/MatrixStack.cpp.i: cmake_force
@@ -107,7 +131,7 @@ CMakeFiles/lab8.dir/src/MatrixStack.cpp.o.provides.build: CMakeFiles/lab8.dir/sr
 
 CMakeFiles/lab8.dir/src/Program.cpp.o: CMakeFiles/lab8.dir/flags.make
 CMakeFiles/lab8.dir/src/Program.cpp.o: ../src/Program.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/lab8.dir/src/Program.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/lab8.dir/src/Program.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/Program.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/Program.cpp
 
 CMakeFiles/lab8.dir/src/Program.cpp.i: cmake_force
@@ -129,9 +153,33 @@ CMakeFiles/lab8.dir/src/Program.cpp.o.provides: CMakeFiles/lab8.dir/src/Program.
 CMakeFiles/lab8.dir/src/Program.cpp.o.provides.build: CMakeFiles/lab8.dir/src/Program.cpp.o
 
 
+CMakeFiles/lab8.dir/src/Parts.cpp.o: CMakeFiles/lab8.dir/flags.make
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/Parts.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/lab8.dir/src/Parts.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/Parts.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/Parts.cpp
+
+CMakeFiles/lab8.dir/src/Parts.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lab8.dir/src/Parts.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/bill/class/Graphics/holmes/lab08-master/src/Parts.cpp > CMakeFiles/lab8.dir/src/Parts.cpp.i
+
+CMakeFiles/lab8.dir/src/Parts.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lab8.dir/src/Parts.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/bill/class/Graphics/holmes/lab08-master/src/Parts.cpp -o CMakeFiles/lab8.dir/src/Parts.cpp.s
+
+CMakeFiles/lab8.dir/src/Parts.cpp.o.requires:
+
+.PHONY : CMakeFiles/lab8.dir/src/Parts.cpp.o.requires
+
+CMakeFiles/lab8.dir/src/Parts.cpp.o.provides: CMakeFiles/lab8.dir/src/Parts.cpp.o.requires
+	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/src/Parts.cpp.o.provides.build
+.PHONY : CMakeFiles/lab8.dir/src/Parts.cpp.o.provides
+
+CMakeFiles/lab8.dir/src/Parts.cpp.o.provides.build: CMakeFiles/lab8.dir/src/Parts.cpp.o
+
+
 CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o: CMakeFiles/lab8.dir/flags.make
 CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o: ../src/GLTextureWriter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/GLTextureWriter.cpp
 
 CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.i: cmake_force
@@ -155,7 +203,7 @@ CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o.provides.build: CMakeFiles/lab8.di
 
 CMakeFiles/lab8.dir/src/GLSL.cpp.o: CMakeFiles/lab8.dir/flags.make
 CMakeFiles/lab8.dir/src/GLSL.cpp.o: ../src/GLSL.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/lab8.dir/src/GLSL.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/lab8.dir/src/GLSL.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/GLSL.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/GLSL.cpp
 
 CMakeFiles/lab8.dir/src/GLSL.cpp.i: cmake_force
@@ -179,7 +227,7 @@ CMakeFiles/lab8.dir/src/GLSL.cpp.o.provides.build: CMakeFiles/lab8.dir/src/GLSL.
 
 CMakeFiles/lab8.dir/src/main.cpp.o: CMakeFiles/lab8.dir/flags.make
 CMakeFiles/lab8.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/lab8.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/lab8.dir/src/main.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/main.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/main.cpp
 
 CMakeFiles/lab8.dir/src/main.cpp.i: cmake_force
@@ -203,7 +251,7 @@ CMakeFiles/lab8.dir/src/main.cpp.o.provides.build: CMakeFiles/lab8.dir/src/main.
 
 CMakeFiles/lab8.dir/src/Shape.cpp.o: CMakeFiles/lab8.dir/flags.make
 CMakeFiles/lab8.dir/src/Shape.cpp.o: ../src/Shape.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/lab8.dir/src/Shape.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/lab8.dir/src/Shape.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/Shape.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/Shape.cpp
 
 CMakeFiles/lab8.dir/src/Shape.cpp.i: cmake_force
@@ -227,7 +275,7 @@ CMakeFiles/lab8.dir/src/Shape.cpp.o.provides.build: CMakeFiles/lab8.dir/src/Shap
 
 CMakeFiles/lab8.dir/src/WindowManager.cpp.o: CMakeFiles/lab8.dir/flags.make
 CMakeFiles/lab8.dir/src/WindowManager.cpp.o: ../src/WindowManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/lab8.dir/src/WindowManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/lab8.dir/src/WindowManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/WindowManager.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/WindowManager.cpp
 
 CMakeFiles/lab8.dir/src/WindowManager.cpp.i: cmake_force
@@ -251,7 +299,7 @@ CMakeFiles/lab8.dir/src/WindowManager.cpp.o.provides.build: CMakeFiles/lab8.dir/
 
 CMakeFiles/lab8.dir/src/Texture.cpp.o: CMakeFiles/lab8.dir/flags.make
 CMakeFiles/lab8.dir/src/Texture.cpp.o: ../src/Texture.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/lab8.dir/src/Texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/lab8.dir/src/Texture.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lab8.dir/src/Texture.cpp.o -c /home/bill/class/Graphics/holmes/lab08-master/src/Texture.cpp
 
 CMakeFiles/lab8.dir/src/Texture.cpp.i: cmake_force
@@ -275,7 +323,7 @@ CMakeFiles/lab8.dir/src/Texture.cpp.o.provides.build: CMakeFiles/lab8.dir/src/Te
 
 CMakeFiles/lab8.dir/ext/glad/src/glad.c.o: CMakeFiles/lab8.dir/flags.make
 CMakeFiles/lab8.dir/ext/glad/src/glad.c.o: ../ext/glad/src/glad.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/lab8.dir/ext/glad/src/glad.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/lab8.dir/ext/glad/src/glad.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/lab8.dir/ext/glad/src/glad.c.o   -c /home/bill/class/Graphics/holmes/lab08-master/ext/glad/src/glad.c
 
 CMakeFiles/lab8.dir/ext/glad/src/glad.c.i: cmake_force
@@ -300,8 +348,10 @@ CMakeFiles/lab8.dir/ext/glad/src/glad.c.o.provides.build: CMakeFiles/lab8.dir/ex
 # Object files for target lab8
 lab8_OBJECTS = \
 "CMakeFiles/lab8.dir/src/Obj.cpp.o" \
+"CMakeFiles/lab8.dir/src/Particle.cpp.o" \
 "CMakeFiles/lab8.dir/src/MatrixStack.cpp.o" \
 "CMakeFiles/lab8.dir/src/Program.cpp.o" \
+"CMakeFiles/lab8.dir/src/Parts.cpp.o" \
 "CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o" \
 "CMakeFiles/lab8.dir/src/GLSL.cpp.o" \
 "CMakeFiles/lab8.dir/src/main.cpp.o" \
@@ -314,8 +364,10 @@ lab8_OBJECTS = \
 lab8_EXTERNAL_OBJECTS =
 
 lab8: CMakeFiles/lab8.dir/src/Obj.cpp.o
+lab8: CMakeFiles/lab8.dir/src/Particle.cpp.o
 lab8: CMakeFiles/lab8.dir/src/MatrixStack.cpp.o
 lab8: CMakeFiles/lab8.dir/src/Program.cpp.o
+lab8: CMakeFiles/lab8.dir/src/Parts.cpp.o
 lab8: CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o
 lab8: CMakeFiles/lab8.dir/src/GLSL.cpp.o
 lab8: CMakeFiles/lab8.dir/src/main.cpp.o
@@ -325,7 +377,7 @@ lab8: CMakeFiles/lab8.dir/src/Texture.cpp.o
 lab8: CMakeFiles/lab8.dir/ext/glad/src/glad.c.o
 lab8: CMakeFiles/lab8.dir/build.make
 lab8: CMakeFiles/lab8.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable lab8"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bill/class/Graphics/holmes/lab08-master/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable lab8"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lab8.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -334,8 +386,10 @@ CMakeFiles/lab8.dir/build: lab8
 .PHONY : CMakeFiles/lab8.dir/build
 
 CMakeFiles/lab8.dir/requires: CMakeFiles/lab8.dir/src/Obj.cpp.o.requires
+CMakeFiles/lab8.dir/requires: CMakeFiles/lab8.dir/src/Particle.cpp.o.requires
 CMakeFiles/lab8.dir/requires: CMakeFiles/lab8.dir/src/MatrixStack.cpp.o.requires
 CMakeFiles/lab8.dir/requires: CMakeFiles/lab8.dir/src/Program.cpp.o.requires
+CMakeFiles/lab8.dir/requires: CMakeFiles/lab8.dir/src/Parts.cpp.o.requires
 CMakeFiles/lab8.dir/requires: CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o.requires
 CMakeFiles/lab8.dir/requires: CMakeFiles/lab8.dir/src/GLSL.cpp.o.requires
 CMakeFiles/lab8.dir/requires: CMakeFiles/lab8.dir/src/main.cpp.o.requires

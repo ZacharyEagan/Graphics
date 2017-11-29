@@ -1,7 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/lab8.dir/src/Obj.cpp.o"
+  "CMakeFiles/lab8.dir/src/Particle.cpp.o"
   "CMakeFiles/lab8.dir/src/MatrixStack.cpp.o"
   "CMakeFiles/lab8.dir/src/Program.cpp.o"
+  "CMakeFiles/lab8.dir/src/Parts.cpp.o"
   "CMakeFiles/lab8.dir/src/GLTextureWriter.cpp.o"
   "CMakeFiles/lab8.dir/src/GLSL.cpp.o"
   "CMakeFiles/lab8.dir/src/main.cpp.o"

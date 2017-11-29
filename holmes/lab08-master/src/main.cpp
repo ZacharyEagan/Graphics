@@ -14,6 +14,9 @@ Winter 2017 - ZJW (Piddington texture write)
 #include "Program.h"
 #include "MatrixStack.h"
 #include "Shape.h"
+#include "Parts.hpp"
+
+
 #include "WindowManager.h"
 #include "GLTextureWriter.h"
 
@@ -54,6 +57,8 @@ public:
    shared_ptr<Obj> gnd;
    std::vector<shared_ptr<Obj>> Lamp;
    std::vector<shared_ptr<Obj>> Bulb;
+   std::vector<shared_ptr<Obj>> Rain;
+   Parts particles;
 	// Contains vertex information for OpenGL
 	GLuint VertexArrayID;
 
@@ -217,7 +222,7 @@ public:
 
 		cTheta = 0;
 		// Set background color.
-		glClearColor(.12f, .34f, .56f, 1.0f);
+		glClearColor(.0f, .0f, .0f, 1.0f);
 		// Enable z-buffer test.
 		glEnable(GL_DEPTH_TEST);
       glDepthRange(0.f,65.0);
@@ -241,7 +246,7 @@ public:
       gnd->set_zero();
       test->set_zero();
 
-      std::shared_ptr<Obj> lmp, blb;
+      std::shared_ptr<Obj> lmp, blb, rn;
       for (int i = 0; i < 4; i++)
       {
          lmp = make_shared<Obj>();
@@ -263,11 +268,23 @@ public:
          Bulb.push_back(blb);
          
       }
+      particles.init(windowManager);
+      particles.initGeom();
+      particles.initTex();
+      particles.initParticles();
+      particles.initGeom();
 
-      for (int i = 0; i < 4; i++)
+     /* for (int i = 0; i < 200; i++)
       {
-
-      }
+         rn = make_shared<Obj>();
+         rn->init("../resources/sphere.obj");
+         rn->set_scale(glm::vec3(0.04,0.04,0.04));
+         rn->set_pos(glm::vec3((rand()%20) - 10,20 + rand() % 5,(rand()%20) - 10));
+         rn->set_color(6);
+         rn->set_zero();
+         rn->set_lights(Bulb);
+         Rain.push_back(rn); 
+      }*/
 	}
 
 
@@ -369,7 +386,9 @@ public:
 
       // Apply perspective projection.
       P->pushMatrix();
+      //P->perspective(45.0f, aspect, 0.01f, 100.0f);
       P->perspective(45.0f, aspect, 0.01f, 100.0f);
+
       test->set_lights(Bulb);
       gnd->set_lights(Bulb);
       //gnd->print_lights();
@@ -393,6 +412,23 @@ public:
          Bulb.at(i)->draw(P->topMatrix(), V, LP);
          
       }
+
+      particles.updateGeom();
+      particles.updateParticles();
+      particles.draw(MV,P,V);
+      /*for (int i = 0; i < 200; i++)
+      {
+         Rain.at(i)->update(0.1);
+         Rain.at(i)->draw(P->topMatrix(), V, LP);
+         if (Rain.at(i)->get_vel().y <= 0.001f)
+         {
+            Rain.at(i)->set_pos(glm::vec3(
+             LP.x + (float)((rand() % 500) - 250) / 25.f,
+             LP.y + (float)((rand() % 500) - 250) / 25.f,
+             LP.z + (float)((rand() % 500) - 250) / 25.f));
+            Rain.at(i)->set_force(glm::vec3(0.f,-9.8f,0.f));
+         }
+      }*/
 	}
 
 
@@ -420,7 +456,7 @@ int main(int argc, char **argv)
 	// and GL context, etc.
 
 	WindowManager *windowManager = new WindowManager();
-	windowManager->init(512, 512);
+	windowManager->init(1280, 1280);
 	windowManager->setEventCallbacks(application);
 	application->windowManager = windowManager;
 

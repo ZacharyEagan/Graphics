@@ -31,6 +31,27 @@ CMakeFiles/lab8.dir/src/Obj.cpp.o
  /home/bill/class/Graphics/holmes/lab08-master/src/Program.h
  /home/bill/class/Graphics/holmes/lab08-master/src/Shape.h
  /home/bill/class/Graphics/holmes/lab08-master/src/Texture.h
+CMakeFiles/lab8.dir/src/Particle.cpp.o
+ ../ext/glad/include/KHR/khrplatform.h
+ ../ext/glad/include/glad/glad.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/GLSL.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/MatrixStack.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/Particle.cpp
+ /home/bill/class/Graphics/holmes/lab08-master/src/Particle.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/Program.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/Texture.h
+CMakeFiles/lab8.dir/src/Parts.cpp.o
+ ../ext/glad/include/KHR/khrplatform.h
+ ../ext/glad/include/glad/glad.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/GLSL.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/MatrixStack.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/Particle.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/Parts.cpp
+ /home/bill/class/Graphics/holmes/lab08-master/src/Parts.hpp
+ /home/bill/class/Graphics/holmes/lab08-master/src/Program.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/Shape.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/Texture.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/WindowManager.h
 CMakeFiles/lab8.dir/src/Program.cpp.o
  ../ext/glad/include/KHR/khrplatform.h
  ../ext/glad/include/glad/glad.h
@@ -65,6 +86,8 @@ CMakeFiles/lab8.dir/src/main.cpp.o
  /home/bill/class/Graphics/holmes/lab08-master/src/GLTextureWriter.h
  /home/bill/class/Graphics/holmes/lab08-master/src/MatrixStack.h
  /home/bill/class/Graphics/holmes/lab08-master/src/Obj.hpp
+ /home/bill/class/Graphics/holmes/lab08-master/src/Particle.h
+ /home/bill/class/Graphics/holmes/lab08-master/src/Parts.hpp
  /home/bill/class/Graphics/holmes/lab08-master/src/Program.h
  /home/bill/class/Graphics/holmes/lab08-master/src/Shape.h
  /home/bill/class/Graphics/holmes/lab08-master/src/Texture.h

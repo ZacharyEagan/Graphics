@@ -31,6 +31,27 @@ CMakeFiles/lab8.dir/src/Obj.cpp.o: ../src/Program.h
 CMakeFiles/lab8.dir/src/Obj.cpp.o: ../src/Shape.h
 CMakeFiles/lab8.dir/src/Obj.cpp.o: ../src/Texture.h
 
+CMakeFiles/lab8.dir/src/Particle.cpp.o: ../ext/glad/include/KHR/khrplatform.h
+CMakeFiles/lab8.dir/src/Particle.cpp.o: ../ext/glad/include/glad/glad.h
+CMakeFiles/lab8.dir/src/Particle.cpp.o: ../src/GLSL.h
+CMakeFiles/lab8.dir/src/Particle.cpp.o: ../src/MatrixStack.h
+CMakeFiles/lab8.dir/src/Particle.cpp.o: ../src/Particle.cpp
+CMakeFiles/lab8.dir/src/Particle.cpp.o: ../src/Particle.h
+CMakeFiles/lab8.dir/src/Particle.cpp.o: ../src/Program.h
+CMakeFiles/lab8.dir/src/Particle.cpp.o: ../src/Texture.h
+
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../ext/glad/include/KHR/khrplatform.h
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../ext/glad/include/glad/glad.h
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/GLSL.h
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/MatrixStack.h
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/Particle.h
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/Parts.cpp
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/Parts.hpp
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/Program.h
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/Shape.h
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/Texture.h
+CMakeFiles/lab8.dir/src/Parts.cpp.o: ../src/WindowManager.h
+
 CMakeFiles/lab8.dir/src/Program.cpp.o: ../ext/glad/include/KHR/khrplatform.h
 CMakeFiles/lab8.dir/src/Program.cpp.o: ../ext/glad/include/glad/glad.h
 CMakeFiles/lab8.dir/src/Program.cpp.o: ../src/GLSL.h
@@ -64,6 +85,8 @@ CMakeFiles/lab8.dir/src/main.cpp.o: ../src/GLSL.h
 CMakeFiles/lab8.dir/src/main.cpp.o: ../src/GLTextureWriter.h
 CMakeFiles/lab8.dir/src/main.cpp.o: ../src/MatrixStack.h
 CMakeFiles/lab8.dir/src/main.cpp.o: ../src/Obj.hpp
+CMakeFiles/lab8.dir/src/main.cpp.o: ../src/Particle.h
+CMakeFiles/lab8.dir/src/main.cpp.o: ../src/Parts.hpp
 CMakeFiles/lab8.dir/src/main.cpp.o: ../src/Program.h
 CMakeFiles/lab8.dir/src/main.cpp.o: ../src/Shape.h
 CMakeFiles/lab8.dir/src/main.cpp.o: ../src/Texture.h
