@@ -32,10 +32,10 @@ out vec4 color;
 void main()
 {
 
-   vec4 texColor0 = texture(Texture0, (vTexCoord*2));
+   vec4 texColor0 = 1.2 * texture(Texture0, (vTexCoord*1));
 
    vec4 colour = vec4(0.f);
-  // colour += texColor0;
+   colour += texColor0;
    vec3 lght;
 
    vec3 norm = normalize(fragNor);
@@ -77,7 +77,7 @@ void main()
            vec4 amb = vec4(MatAmb * LC[i], 1.0);
 
 
-           colour += dstE * ((dif * dst) +  0.001 * (amb * dst) + (spec * dst))/2.001;
+           colour += dstE * ((dif * dst * texColor0) +  0.001 * (amb * dst * texColor0) + (spec * dst))/2.001;
            
    }
    colour = colour / nLights;

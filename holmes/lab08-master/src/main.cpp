@@ -58,6 +58,7 @@ public:
    std::vector<shared_ptr<Obj>> Lamp;
    std::vector<shared_ptr<Obj>> Bulb;
    std::vector<shared_ptr<Obj>> Rain;
+   std::shared_ptr<Texture> texture;
    Parts particles;
 	// Contains vertex information for OpenGL
 	GLuint VertexArrayID;
@@ -233,11 +234,13 @@ public:
 	{  
       //std::cout <<" init Geom\n";
       test = make_shared<Obj>();
-      test->init("../resources/sphere.obj");
+      //test->init("../resources/sphere.obj", "../resources/world.jpg", true);
+     test->init("../resources/sphere.obj");
       test->set_scale(glm::vec3(2.0,2.0,2.0));
       test->set_pos(glm::vec3(4.f,10.f,4.f));
       test->set_color(0);
       gnd = make_shared<Obj>();
+//      gnd->init("../resources/cube.obj", "../resources/grass.jpg", true);
       gnd->init("../resources/cube.obj");
       gnd->set_scale(glm::vec3(50,30,50));
       gnd->set_color(1);
@@ -250,7 +253,8 @@ public:
       for (int i = 0; i < 4; i++)
       {
          lmp = make_shared<Obj>();
-         lmp->init("../resources/lamp.obj");
+       lmp->init("../resources/lamp.obj", "../resources/crate.jpg", true);
+//         lmp->init("../resources/lamp.obj");
          lmp->set_scale(glm::vec3(4,2.2,4));
          lmp->set_pos(glm::vec3(0,20,i * 2.f));
          lmp->set_color(5);

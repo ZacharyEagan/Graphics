@@ -23,9 +23,11 @@ void Obj::init(std::string model)
    prog->addUniform("alpha");
    prog->addUniform("LC");
    prog->addUniform("LP");
+   prog->addUniform("Texture0");
    prog->addAttribute("vertPos");
    prog->addAttribute("vertNor");
    prog->addAttribute("vertTex");
+
 
 
    shape = std::make_shared<Shape>();
@@ -35,6 +37,51 @@ void Obj::init(std::string model)
    shape->init();
 }
 
+void Obj::init(std::string model, std::string tex, bool wrap)
+{
+    prog->setVerbose(true);
+    prog->setShaderNames(
+        "../resources/bpt_vert.glsl",
+        "../resources/bpt_frag.glsl");
+    if (! prog->init())
+    {
+      std::cerr << "One or more shaders failed to compile... exiting!" << std::endl;
+      exit(1);
+   }
+   prog->addUniform("P");
+   prog->addUniform("V");           //new1
+   prog->addUniform("MV");
+   prog->addUniform("VP");
+   prog->addUniform("nLights");
+   prog->addUniform("MatAmb");
+   prog->addUniform("MatDif");
+   prog->addUniform("MatSpec");
+   prog->addUniform("shine");
+   prog->addUniform("alpha");
+   prog->addUniform("Texture0");
+   prog->addUniform("LC");
+   prog->addUniform("LP");
+   prog->addAttribute("vertPos");
+   prog->addAttribute("vertNor");
+   prog->addAttribute("vertTex");
+
+
+   texture = std::make_shared<Texture>();
+   texture->setFilename(tex);
+   texture->init();
+   texture->setUnit(0.002);
+   if (wrap)
+      texture->setWrapModes(GL_REPEAT, GL_REPEAT);
+   else
+      texture->setWrapModes(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
+   Tex = true;
+
+   shape = std::make_shared<Shape>();
+   shape->loadMesh(model);
+   shape->measure();
+   shape->resize();
+   shape->init();
+}
 //void Obj::set_lower(gl::vec3 bound)
 //void set_upper(gl::vec3 bound);
 void Obj::set_color(int col)
@@ -110,7 +157,7 @@ void Obj::draw(glm::mat4 P, glm::mat4 V, glm::vec3 VP)
       MV->scale(scl);
       MV->pushMatrix();
       MV->translate(zero);
-
+      
       glUniform1i(prog->getUniform("nLights"), ars);
       glUniformMatrix4fv(prog->getUniform("P"), 1, GL_FALSE, value_ptr(p));
       glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE,
@@ -134,6 +181,14 @@ void Obj::draw(glm::mat4 P, glm::mat4 V, glm::vec3 VP)
       //glUniform3f(prog->getUniform("LP"), 1.f , 1.f , 1.f );
 
 		set_mat(color);
+      if (Tex)
+      {
+         texture->bind(prog->getUniform("Texture0"));
+         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+      }
+
       shape->draw(prog);
    MV->popMatrix();
    MV->popMatrix();
