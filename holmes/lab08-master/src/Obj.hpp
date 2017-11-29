@@ -37,9 +37,9 @@ private:
   
    glm::vec3 light = glm::vec3(0);
    double mass = 1.f;
-   int ars = 4;
-   GLfloat bulbC[12] = {0};
-   GLfloat bulbP[12] = {0};
+   int ars = 10;
+   std::vector<GLfloat>bulbC;
+   std::vector<GLfloat>bulbP;
      
 public:
    void init(std::string model);

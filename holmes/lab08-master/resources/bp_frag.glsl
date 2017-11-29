@@ -5,12 +5,12 @@ uniform vec3 MatSpec;
 uniform vec3 MatDif;
 uniform float shine;
 uniform float alpha;
-uniform float nLights;
+uniform int nLights;
 
 uniform sampler2D vertTex;
 
-uniform vec3 LP[10];
-uniform vec3 LC[10];
+uniform vec3 LP[20];
+uniform vec3 LC[20];
 uniform vec3 VP;
 
 uniform  mat4 MV;
@@ -35,8 +35,8 @@ void main()
    vec3 norm = normalize(fragNor);
    vec3 eyeN = normalize(VP - pos.xyz);
 
-   //for (int i = 0; i < nLights; i++)
-   for (int i = 0; i < 10; i++)
+   for (int i = 0; i < nLights; i++)
+   //for (int i = 0; i < 10; i++)
    {
            lght = (vec4(LP[i], 0.f)).xyz; 
            vec3 len = (lght - pos.xyz);
@@ -61,20 +61,25 @@ void main()
            dst = 1 / dst;
             
 
-
+           vec3 lenE = (VP - pos.xyz);
+           lenE *= vec3(0.1f,0.1f,0.1f);
+           float dstE = length(lenE);
+           dstE *= dstE;
+           dstE = 1 / dstE;
+           dstE = min (1.f, dstE);
        
 
            vec4 amb = vec4(MatAmb * LC[i], 1.0);
 
+           // colour += dstE;
 
-         //  spec /= dst;
-           colour += (dif * dst) +  0.001 * (amb * dst) + (spec * dst)/2.001;
+           colour += dstE * ((dif * dst) +  0.001 * (amb * dst) + (spec * dst))/2.001;
            
            //colour += min((spec + dif + amb/2), 1.0);
          //  colour += vec4(LC[i], 1.0) * vec4(1.0) / dst;
    }
-//   colour = colour / nLights;
-   colour = colour / 10;
+   colour = colour / nLights;
+//   colour = colour / 10;
    colour.a = 1.f;
    color = min(colour, vec4(1.0));
 

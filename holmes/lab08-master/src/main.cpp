@@ -353,7 +353,7 @@ public:
       V = glm::lookAt(glm::vec3(locX,locY,locZ), 
             glm::vec3(cos(cPhi)*cos(cTheta)+locX,sin(cPhi) + locY,
             cos(cPhi)*sin(cTheta) + locZ), glm::vec3(0,1,0));   
-      std::cout << "V: ";
+      /*std::cout << "V: ";
       for (int i = 0; i < 4; i++)
       {
          for (int j = 0; j < 4; j++)
@@ -362,7 +362,7 @@ public:
          }
          std::cout << "\n";
       } 
-      std::cout << "\n\n";
+      std::cout << "\n\n";*/
       // Clear framebuffer.
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -372,7 +372,7 @@ public:
       P->perspective(45.0f, aspect, 0.01f, 100.0f);
       test->set_lights(Bulb);
       gnd->set_lights(Bulb);
-      gnd->print_lights();
+      //gnd->print_lights();
       test->update(0.1);
       test->draw(P->topMatrix(), V, LP);
       gnd->update(0.1);

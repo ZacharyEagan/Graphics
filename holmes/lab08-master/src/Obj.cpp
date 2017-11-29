@@ -15,6 +15,7 @@ void Obj::init(std::string model)
    prog->addUniform("V");           //new1
    prog->addUniform("MV");
    prog->addUniform("VP");
+   prog->addUniform("nLights");
    prog->addUniform("MatAmb");
    prog->addUniform("MatDif");
    prog->addUniform("MatSpec");
@@ -107,6 +108,7 @@ void Obj::draw(glm::mat4 P, glm::mat4 V, glm::vec3 VP)
       MV->pushMatrix();
       MV->translate(zero);
 
+      glUniform1i(prog->getUniform("nLights"), ars);
       glUniformMatrix4fv(prog->getUniform("P"), 1, GL_FALSE, value_ptr(p));
       glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE,
                             value_ptr(MV->topMatrix()));
@@ -116,7 +118,7 @@ void Obj::draw(glm::mat4 P, glm::mat4 V, glm::vec3 VP)
 
       GLfloat lc[12] = {1.f,1.f,1.f, 1.f,1.f,1.f, 
                              1.f,1.f,1.f, 1.f,1.f,1.f} ;
-      glUniform3fv(prog->getUniform("LC"), 4, bulbC);
+      glUniform3fv(prog->getUniform("LC"), ars, &(bulbC.front()));
 //      glUniform3fv(prog->getUniform("LC"), 4, lc);
     //  glUniform3f(prog->getUniform("LC"),
      //                            1.f,
@@ -124,7 +126,7 @@ void Obj::draw(glm::mat4 P, glm::mat4 V, glm::vec3 VP)
        //                          1.f);
       GLfloat lp[12] = {2.f,2.f,2.f, 2.f,2.f,2.f, 
                              2.f,2.f,2.f, 2.f,2.f,2.f} ;
-      glUniform3fv(prog->getUniform("LP"), 4, bulbP);
+      glUniform3fv(prog->getUniform("LP"), ars, &(bulbP.front()));
 //      glUniform3fv(prog->getUniform("LP"), 4, lp);
       //glUniform3f(prog->getUniform("LP"), 1.f , 1.f , 1.f );
 
@@ -238,13 +240,20 @@ void Obj::set_lights(std::vector<std::shared_ptr<Obj>> lights)
    double cur = 0;
    int count = 0;
    glm::vec3 lp,lc;
+   bulbC.resize(ars * 3);
+   bulbP.resize(ars * 3);
+   bulbC.clear();
+   bulbP.clear();
+   
+   std::vector<float> temp;
+
    for (int i = lights.size(); i--;)
    {
       cur = (1 / glm::length(lights.at(i)->get_light_pos() - pos)); 
       cur *= glm::length(lights.at(i)->get_light());
-      if (cur > min)
+      if (count < ars)
       {
-         min = cur;
+         temp.push_back(cur);
          lc = lights.at(i)->get_light();
          lp = lights.at(i)->get_light_pos();
 
@@ -256,9 +265,28 @@ void Obj::set_lights(std::vector<std::shared_ptr<Obj>> lights)
          bulbP[count * 3 + 1] = lp.g;
          bulbP[count * 3 + 2] = lp.b;
 
-         count ++;
-         if (count >= ars)
-            break;
+         count++;
+      }
+      else
+      {
+         for (int j = 0; j < ars; j++)
+         {
+            if (temp.at(j) < cur)
+            {
+               temp.at(j) = cur;
+               lc = lights.at(i)->get_light();
+               lp = lights.at(i)->get_light_pos();
+
+               bulbC[count * 3] = lc.r;
+               bulbC[count * 3 + 1] = lc.g;
+               bulbC[count * 3 + 2] = lc.b;
+         
+               bulbP[count * 3] = lp.r;
+               bulbP[count * 3 + 1] = lp.g;
+               bulbP[count * 3 + 2] = lp.b;
+               break;        
+            }
+         }
       }
 
 
