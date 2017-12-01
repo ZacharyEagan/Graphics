@@ -204,7 +204,7 @@ public:
    {
       //std::cout << xpos << " " << ypos << "\n";
       MouseX += xpos - MouseX; //new4
-      MouseY += ypos - MouseY; //new4
+      MouseY += -ypos - MouseY; //new4
     
    }
 
@@ -240,8 +240,8 @@ public:
       test->set_pos(glm::vec3(4.f,10.f,4.f));
       test->set_color(0);
       gnd = make_shared<Obj>();
-//      gnd->init("../resources/cube.obj", "../resources/grass.jpg", true);
-      gnd->init("../resources/cube.obj");
+      gnd->init("../resources/cube.obj", "../resources/stromsky.jpg", true);
+//      gnd->init("../resources/cube.obj");
       gnd->set_scale(glm::vec3(50,30,50));
       gnd->set_color(1);
       gnd->set_pos(glm::vec3(0,0,0));
@@ -360,15 +360,22 @@ public:
 
       cTheta = (MouseX / width) * M_PI; //new4
       cPhi = (MouseY / height) * M_PI;
-      if (cPhi > 1.39)
-         MouseY = (1.39 / M_PI) * height;
-      if (cPhi < -1.39)
-         MouseY = -(1.39 / M_PI) * height;
+      if (cPhi > 1.0)
+      {
+         MouseY = (1.0 / M_PI) * height;
+         cPhi = 1.0;
+      }
+      if (cPhi < -1.0)
+      {
+         MouseY = -(1.0 / M_PI) * height;
+         cPhi = -1.0;
 
-      if (cPhi > (M_PI * (3.0/4.0)))
-         cPhi = (M_PI * (3.0/4.0));
-      if (cPhi < -(M_PI * (3.0/4.0)))
-         cPhi = -(M_PI * (3.0/4.0));
+      }
+
+     // if (cPhi > (M_PI * (3.0/4.0)))
+      //   cPhi = (M_PI * (3.0/4.0));
+     // if (cPhi < -(M_PI * (3.0/4.0)))
+      //   cPhi = -(M_PI * (3.0/4.0));
 
       glm::vec3 LP = glm::vec3(locX, locY, locZ);
       V = glm::lookAt(glm::vec3(locX,locY,locZ), 
@@ -417,8 +424,8 @@ public:
          
       }
 
-      particles.updateGeom();
-      particles.updateParticles();
+      //particles.updateGeom();
+      //particles.updateParticles();
       particles.draw(MV,P,V);
       /*for (int i = 0; i < 200; i++)
       {

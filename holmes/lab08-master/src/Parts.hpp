@@ -33,7 +33,7 @@ float t = 0.0;
 float h = 0.01;
 double camRot = 0.0;
 glm::vec3 g = glm::vec3(0.0,-0.01f,0.0);
-int numP = 600;
+int numP = 300;
 
 
    // Contains vertex information for OpenGL

@@ -146,6 +146,7 @@ public:
       progL->addUniform("shine");
       progL->addAttribute("vertPos");
       progL->addAttribute("vertNor");
+      progL->addAttribute("vertTex");
 
 
 
