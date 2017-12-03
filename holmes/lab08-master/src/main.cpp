@@ -75,8 +75,8 @@ public:
 	GLuint quad_vertexbuffer;
 
 	//reference to texture FBO
-	GLuint frameBuf[2];
-	GLuint texBuf[2];
+	GLuint frameBuf[4];
+	GLuint texBuf[4];
 	GLuint depthBuf;
 
 	bool FirstTime = true;
@@ -225,6 +225,7 @@ public:
 		glViewport(0, 0, width, height);
       createFBO(frameBuf[0], texBuf[0]);
       createFBO(frameBuf[1], texBuf[1]);
+      createFBO(frameBuf[2], texBuf[2]);
 	}
 
 
@@ -280,23 +281,6 @@ public:
 
 
 
-   // with the prior scene image - next lab we will process
-   void ProcessImage(GLuint inTex)
-   {
-      glActiveTexture(GL_TEXTURE0);
-      glBindTexture(GL_TEXTURE_2D, inTex);
-
-      // example applying of 'drawing' the FBO texture - change shaders
-      texProg->bind();
-      glUniform1i(texProg->getUniform("texBuf"), 0);
-      glUniform2f(texProg->getUniform("dir"), -1, 0);
-      glEnableVertexAttribArray(0);
-      glBindBuffer(GL_ARRAY_BUFFER, quad_vertexbuffer);
-      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
-      glDrawArrays(GL_TRIANGLES, 0, 6);
-      glDisableVertexAttribArray(0);
-      texProg->unbind();
-   }
 
 
 
@@ -318,8 +302,8 @@ public:
 /////////////new1
 
       //create two frame buffer objects to toggle between
-      glGenFramebuffers(2, frameBuf);
-      glGenTextures(2, texBuf);
+      glGenFramebuffers(3, frameBuf);//AAAA
+      glGenTextures(3, texBuf); //AAAA
       glGenRenderbuffers(1, &depthBuf);
       createFBO(frameBuf[0], texBuf[0]);
       
@@ -335,6 +319,14 @@ public:
 
       //create another FBO so we can swap back and forth
       createFBO(frameBuf[1], texBuf[1]);
+      glBindRenderbuffer(GL_RENDERBUFFER, depthBuf);
+      glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
+      glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuf);
+
+      //create another FBO so we can swap back and forth
+      createFBO(frameBuf[2], texBuf[2]); //AAAA
+      glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
+      glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuf);
       //this one doesn't need depth
          texProg = make_shared<Program>();
       texProg->setVerbose(true);
@@ -348,7 +340,9 @@ public:
          std::cerr << "One or more shaders failed to compile... exiting!" << std::endl;
          exit(1);
       }
-      texProg->addUniform("texBuf");
+      texProg->addUniform("texBuf_color");
+      texProg->addUniform("texBuf_norm");
+      texProg->addUniform("texBuf_pos");
       texProg->addAttribute("vertPos");
       texProg->addUniform("dir");
 
@@ -372,6 +366,7 @@ public:
       //std::cout <<" init Geom\n";
       test = make_shared<Obj>();
       prog_norm = init_prog("../resources/normal_vert.glsl", "../resources/normal_frag.glsl");
+      prog_pos = init_prog("../resources/pos_vert.glsl", "../resources/pos_frag.glsl");
       //test->init("../resources/sphere.obj", "../resources/world.jpg", true);
       test->init("../resources/sphere.obj");
       prog_color = test->get_prog();
@@ -380,7 +375,7 @@ public:
       test->set_color(0);
 
      gnd = make_shared<Obj>();
-      gnd->init("../resources/cube.obj", "../resources/stromsky.jpg", true, prog_norm);
+      gnd->init("../resources/cube.obj", "../resources/stromsky.jpg", true);
 //      gnd->init("../resources/cube.obj");
       gnd->set_scale(glm::vec3(50,30,50));
       gnd->set_color(1);
@@ -428,17 +423,6 @@ public:
       particles.initParticles();
       particles.initGeom();
 
-     /* for (int i = 0; i < 200; i++)
-      {
-         rn = make_shared<Obj>();
-         rn->init("../resources/sphere.obj");
-         rn->set_scale(glm::vec3(0.04,0.04,0.04));
-         rn->set_pos(glm::vec3((rand()%20) - 10,20 + rand() % 5,(rand()%20) - 10));
-         rn->set_color(6);
-         rn->set_zero();
-         rn->set_lights(Bulb);
-         Rain.push_back(rn); 
-      }*/
       initQuad();
 	}
 
@@ -490,15 +474,107 @@ public:
       }
    }
 
-	void render()
-	{
-      glfwGetFramebufferSize(windowManager->getHandle(),
-                              &width, &height);
-      glViewport(0, 0, width, height);
-    
-      glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[0]);
+   // with the prior scene image - next lab we will process
+   void ProcessImage(GLuint inTex)//, GLuint inTex2)
+   {
+      glActiveTexture(GL_TEXTURE0);
+      glBindTexture(GL_TEXTURE_2D, inTex);
+     // glActiveTexture(GL_TEXTURE1);
+     // glBindTexture(GL_TEXTURE_2D, inTex2);
+
+      // example applying of 'drawing' the FBO texture - change shaders
+      texProg->bind();
+      glUniform1i(texProg->getUniform("texBuf_color"), 0);
+      glUniform1i(texProg->getUniform("texBuf_norm"), 1);//AAAA
+      glUniform1i(texProg->getUniform("texBuf_pos"), 2);//AAAA
+//      glUniform1i(texProg->getUniform("texBuf"), 2);
+      glUniform2f(texProg->getUniform("dir"), -1, 0);
+      glEnableVertexAttribArray(0);
+      glBindBuffer(GL_ARRAY_BUFFER, quad_vertexbuffer);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
+      glDrawArrays(GL_TRIANGLES, 0, 6);
+      glDisableVertexAttribArray(0);
+      texProg->unbind();
+   }
 
 
+
+
+
+   // with the prior scene image - next lab we will process
+   void ProcessImage(GLuint tex_color, GLuint tex_norm, GLuint tex_pos)
+   {
+      glActiveTexture(GL_TEXTURE0);
+      glBindTexture(GL_TEXTURE_2D, tex_color);
+      glActiveTexture(GL_TEXTURE1);
+      glBindTexture(GL_TEXTURE_2D, tex_norm);
+      glActiveTexture(GL_TEXTURE2);
+      glBindTexture(GL_TEXTURE_2D, tex_pos);
+
+      // example applying of 'drawing' the FBO texture - change shaders
+      texProg->bind();
+      glUniform1i(texProg->getUniform("texBuf_color"), 0);
+      glUniform1i(texProg->getUniform("texBuf_norm"), 1);//AAAA
+      glUniform1i(texProg->getUniform("texBuf_pos"), 2);//AAAA
+//      glUniform1i(texProg->getUniform("texBuf"), 2);
+      glUniform2f(texProg->getUniform("dir"), -1, 0);
+      glEnableVertexAttribArray(0);
+      glBindBuffer(GL_ARRAY_BUFFER, quad_vertexbuffer);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
+      glDrawArrays(GL_TRIANGLES, 0, 6);
+      glDisableVertexAttribArray(0);
+      texProg->unbind();
+   }
+
+   
+   void draw()
+   {
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+      //Use the matrix stack for Lab 6
+      float aspect = width/(float)height;
+
+      auto P = make_shared<MatrixStack>();
+
+      glm::vec3 LP = glm::vec3(locX, locY, locZ);
+      V = glm::lookAt(glm::vec3(locX,locY,locZ), 
+            glm::vec3(cos(cPhi)*cos(cTheta)+locX,sin(cPhi) + locY,
+            cos(cPhi)*sin(cTheta) + locZ), glm::vec3(0,1,0));   
+
+      // Apply perspective projection.
+      P->pushMatrix();
+      //P->perspective(45.0f, aspect, 0.01f, 100.0f);
+      P->perspective(45.0f, aspect, 0.01f, 100.0f);
+
+      test->set_prog(prog_color);
+      test->set_lights(Bulb);
+      gnd->set_prog(prog_color);
+      gnd->set_lights(Bulb);
+      //gnd->print_lights();
+
+      test->draw(P->topMatrix(), V, LP);
+
+      gnd->draw(P->topMatrix(), V, LP);
+
+
+      for (int i = 0; i < 4; i++)
+      {
+         Lamp.at(i)->set_prog(prog_lamp);
+         Bulb.at(i)->set_prog(prog_color);
+
+         Lamp.at(i)->set_lights(Bulb);
+         Bulb.at(i)->set_lights(Bulb);
+
+         Lamp.at(i)->draw(P->topMatrix(), V, LP);
+         Bulb.at(i)->draw(P->topMatrix(), V, LP);
+         
+      }
+
+      particles.draw(glm::mat4(1.f),P,V);
+   }
+
+   void draw(std::shared_ptr<Program> prog)
+   {
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       //Use the matrix stack for Lab 6
@@ -517,43 +593,76 @@ public:
       P->perspective(45.0f, aspect, 0.01f, 100.0f);
 
 
-      test->set_lights(Bulb);
-      gnd->set_lights(Bulb);
+      test->set_prog(prog);
+      //gnd->set_prog(prog_color);
+      gnd->set_prog(prog);
       //gnd->print_lights();
 
       test->draw(P->topMatrix(), V, LP);
 
       gnd->draw(P->topMatrix(), V, LP);
 
-     
 
       for (int i = 0; i < 4; i++)
       {
-         Lamp.at(i)->set_lights(Bulb);
-         Bulb.at(i)->set_lights(Bulb);
+         Lamp.at(i)->set_prog(prog);
+         Bulb.at(i)->set_prog(prog);
 
          Lamp.at(i)->draw(P->topMatrix(), V, LP);
          Bulb.at(i)->draw(P->topMatrix(), V, LP);
          
       }
 
-      particles.draw(glm::mat4(1.f),P,V);
+//      particles.draw(glm::mat4(1.f),P,V);
+   }
 
-      for (int i = 0; i < 3; i ++)
+	void render()
+	{
+      glfwGetFramebufferSize(windowManager->getHandle(),
+                              &width, &height);
+
+    
+      gnd->set_prog(prog_color);
+      glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[0]);
+      glViewport(0, 0, width, height);
+      draw();
+      ProcessImage(texBuf[0]);
+
+      /*for (int i = 0; i < 3; i ++)
       {
+         
          //set up framebuffer
          glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[(i+1)%2]);
          glViewport(0, 0, width, height);
          // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
          //set up texture
          ProcessImage(texBuf[i%2]);
-      }
+      }*/
+         //set up framebuffer
+
+      glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[1]);
+      glViewport(0, 0, width, height);
+      draw(prog_norm);
+      ProcessImage(texBuf[1]);
+
+      
+      gnd->set_prog(prog_pos);
+      glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[2]);
+      glViewport(0, 0, width, height);
+      draw(prog_pos);
+      ProcessImage(texBuf[2]);
+      //   glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[0]);
+      //   glViewport(0, 0, width, height);
+         // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+         //set up texture
+      //   ProcessImage(texBuf[1]);
 
       // now draw the actual output 
+         glFinish();
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
       glViewport(0, 0, width, height);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      ProcessImage(texBuf[1]);
+      ProcessImage(texBuf[0], texBuf[1], texBuf[2]);
 
 	}
 
@@ -630,7 +739,7 @@ int main(int argc, char **argv)
 			// Render scene.
          do{
             application->update();
-			glfwPollEvents();
+			   glfwPollEvents();
            // std::cout<< "update\n";
          }while (time > (float)glfwGetTime());
          
