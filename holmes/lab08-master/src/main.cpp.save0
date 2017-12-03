@@ -46,11 +46,7 @@ public:
 	WindowManager * windowManager = nullptr;
 
 	// Our shader program
-	std::shared_ptr<Program> prog_color;
-	std::shared_ptr<Program> prog_norm;
-	std::shared_ptr<Program> prog_pos;
-   std::shared_ptr<Program> prog_lamp;//need one program for every textured object;
-  
+	std::shared_ptr<Program> prog;
 	std::shared_ptr<Program> texProg;
 
 	// Shape to be used (from obj file)
@@ -104,13 +100,6 @@ public:
    float lTheta = 0;
 	bool mouseDown = false;
    double MouseX, MouseY; //new4
-
-
-   glm::mat4 V;
-      int width, height;
-
-
-
 
 	void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
@@ -223,8 +212,6 @@ public:
 	void resizeCallback(GLFWwindow *window, int width, int height) 
 	{
 		glViewport(0, 0, width, height);
-      createFBO(frameBuf[0], texBuf[0]);
-      createFBO(frameBuf[1], texBuf[1]);
 	}
 
 
@@ -371,16 +358,13 @@ public:
 	{  
       //std::cout <<" init Geom\n";
       test = make_shared<Obj>();
-      prog_norm = init_prog("../resources/normal_vert.glsl", "../resources/normal_frag.glsl");
       //test->init("../resources/sphere.obj", "../resources/world.jpg", true);
-      test->init("../resources/sphere.obj");
-      prog_color = test->get_prog();
+     test->init("../resources/sphere.obj");
       test->set_scale(glm::vec3(2.0,2.0,2.0));
       test->set_pos(glm::vec3(4.f,10.f,4.f));
       test->set_color(0);
-
-     gnd = make_shared<Obj>();
-      gnd->init("../resources/cube.obj", "../resources/stromsky.jpg", true, prog_norm);
+      gnd = make_shared<Obj>();
+      gnd->init("../resources/cube.obj", "../resources/stromsky.jpg", true);
 //      gnd->init("../resources/cube.obj");
       gnd->set_scale(glm::vec3(50,30,50));
       gnd->set_color(1);
@@ -390,35 +374,25 @@ public:
       test->set_zero();
 
       std::shared_ptr<Obj> lmp, blb, rn;
-
-      lmp = make_shared<Obj>();
-      lmp->init("../resources/lamp.obj", "../resources/crate.jpg", true);
-      prog_lamp = lmp->get_prog();
       for (int i = 0; i < 4; i++)
       {
          lmp = make_shared<Obj>();
-         lmp->init("../resources/lamp.obj", "../resources/crate.jpg", true, prog_lamp);
-//         lmp->set_prog(prog_color);
+       lmp->init("../resources/lamp.obj", "../resources/crate.jpg", true);
 //         lmp->init("../resources/lamp.obj");
          lmp->set_scale(glm::vec3(4,2.2,4));
          lmp->set_pos(glm::vec3(0,20,i * 2.f));
          lmp->set_color(5);
          lmp->set_zero();
-         //lmp->set_light(glm::vec3(0.2f,0.1f,0.006f));
-         
          Lamp.push_back(lmp);
 
          blb = make_shared<Obj>();
-         blb->init("../resources/sphere.obj", prog_color);
+         blb->init("../resources/sphere.obj");
          blb->set_scale(glm::vec3(0.18,0.26,0.18));
          blb->set_pos(glm::vec3(0.7,2.9,i * 2.f));
          blb->set_color(4);
          blb->set_zero();
          blb->set_force(glm::vec3(0.f,0.f,0.f));
-         if (i % 2)
-           blb->set_light(glm::vec3(0.2f,0.1f,0.006f));
-         else 
-            blb->set_light(glm::vec3(0.4f,0.3f,0.06f));
+         blb->set_light(glm::vec3(0.2f,0.1f,0.006f));
          Bulb.push_back(blb);
          
       }
@@ -492,11 +466,19 @@ public:
 
 	void render()
 	{
+      int width, height;
       glfwGetFramebufferSize(windowManager->getHandle(),
                               &width, &height);
       glViewport(0, 0, width, height);
     
-      glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[0]);
+      if (Moving)
+      { 
+         glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[0]);
+      }
+      else
+      {
+         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+      }
 
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -505,70 +487,12 @@ public:
       float aspect = width/(float)height;
 
       auto P = make_shared<MatrixStack>();
-
-      glm::vec3 LP = glm::vec3(locX, locY, locZ);
-      V = glm::lookAt(glm::vec3(locX,locY,locZ), 
-            glm::vec3(cos(cPhi)*cos(cTheta)+locX,sin(cPhi) + locY,
-            cos(cPhi)*sin(cTheta) + locZ), glm::vec3(0,1,0));   
-
-      // Apply perspective projection.
-      P->pushMatrix();
-      //P->perspective(45.0f, aspect, 0.01f, 100.0f);
-      P->perspective(45.0f, aspect, 0.01f, 100.0f);
+      auto MV = make_shared<MatrixStack>();
+      glm::mat4 V;
 
 
-      test->set_lights(Bulb);
-      gnd->set_lights(Bulb);
-      //gnd->print_lights();
+      move(); 
 
-      test->draw(P->topMatrix(), V, LP);
-
-      gnd->draw(P->topMatrix(), V, LP);
-
-     
-
-      for (int i = 0; i < 4; i++)
-      {
-         Lamp.at(i)->set_lights(Bulb);
-         Bulb.at(i)->set_lights(Bulb);
-
-         Lamp.at(i)->draw(P->topMatrix(), V, LP);
-         Bulb.at(i)->draw(P->topMatrix(), V, LP);
-         
-      }
-
-      particles.draw(glm::mat4(1.f),P,V);
-
-      for (int i = 0; i < 3; i ++)
-      {
-         //set up framebuffer
-         glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[(i+1)%2]);
-         glViewport(0, 0, width, height);
-         // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-         //set up texture
-         ProcessImage(texBuf[i%2]);
-      }
-
-      // now draw the actual output 
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
-      glViewport(0, 0, width, height);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      ProcessImage(texBuf[1]);
-
-	}
-
-
-   void update()
-   {
-      static float timeL = 0;
-      float dtime = (float)glfwGetTime() - timeL;
-      if(dtime > DT)
-      {
-         move(); 
-         timeL = (float)glfwGetTime();
-         particles.updateGeom();
-         particles.updateParticles();
-      }
       cTheta = (MouseX / width) * M_PI; //new4
       cPhi = (MouseY / height) * M_PI;
       if (cPhi > 1.0)
@@ -582,25 +506,112 @@ public:
          cPhi = -1.0;
 
       }
-      
-   
+
+     // if (cPhi > (M_PI * (3.0/4.0)))
+      //   cPhi = (M_PI * (3.0/4.0));
+     // if (cPhi < -(M_PI * (3.0/4.0)))
+      //   cPhi = -(M_PI * (3.0/4.0));
+
+      glm::vec3 LP = glm::vec3(locX, locY, locZ);
+      V = glm::lookAt(glm::vec3(locX,locY,locZ), 
+            glm::vec3(cos(cPhi)*cos(cTheta)+locX,sin(cPhi) + locY,
+            cos(cPhi)*sin(cTheta) + locZ), glm::vec3(0,1,0));   
+      /*std::cout << "V: ";
+      for (int i = 0; i < 4; i++)
+      {
+         for (int j = 0; j < 4; j++)
+         {
+            std::cout << V[i][j] << " ";
+         }
+         std::cout << "\n";
+      } 
+      std::cout << "\n\n";*/
+      // Clear framebuffer.
+
+
+
+      // Apply perspective projection.
+      P->pushMatrix();
+      //P->perspective(45.0f, aspect, 0.01f, 100.0f);
+      P->perspective(45.0f, aspect, 0.01f, 100.0f);
+
+      test->set_lights(Bulb);
+      gnd->set_lights(Bulb);
+      //gnd->print_lights();
       test->update(0.1);
+      test->draw(P->topMatrix(), V, LP);
       gnd->update(0.1);
+      gnd->draw(P->topMatrix(), V, LP);
+
+     
 
       for (int i = 0; i < 4; i++)
       {
+         Lamp.at(i)->set_lights(Bulb);
+         Bulb.at(i)->set_lights(Bulb);
+
          Lamp.at(i)->update(0.1);
+
+         Lamp.at(i)->draw(P->topMatrix(), V, LP);
+
          Bulb.at(i)->update(0.1);
+         Bulb.at(i)->draw(P->topMatrix(), V, LP);
+         
       }
+
+      //particles.updateGeom();
+      //particles.updateParticles();
+      particles.draw(MV,P,V);
+      /*for (int i = 0; i < 200; i++)
+      {
+         Rain.at(i)->update(0.1);
+         Rain.at(i)->draw(P->topMatrix(), V, LP);
+         if (Rain.at(i)->get_vel().y <= 0.001f)
+         {
+            Rain.at(i)->set_pos(glm::vec3(
+             LP.x + (float)((rand() % 500) - 250) / 25.f,
+             LP.y + (float)((rand() % 500) - 250) / 25.f,
+             LP.z + (float)((rand() % 500) - 250) / 25.f));
+            Rain.at(i)->set_force(glm::vec3(0.f,-9.8f,0.f));
+         }
+      }*/
+
+
+      if (Moving)
+      {
+         for (int i = 0; i < 3; i ++)
+         {
+            //set up framebuffer
+            glBindFramebuffer(GL_FRAMEBUFFER, frameBuf[(i+1)%2]);
+           // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            //set up texture
+            ProcessImage(texBuf[i%2]);
+         }
+
+         // now draw the actual output 
+         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+         ProcessImage(texBuf[1]);
+         //ProcessImage(texBuf[0]);
+         assert(GLTextureWriter::WriteImage(texBuf[1], "Texture_output.png"));  
+
+      }
+
+	}
+
+
+   void updatePos()
+   {
+      
    }
+
+
 };
 
 int main(int argc, char **argv)
 {
 	// Where the resources are loaded from
 	std::string resourceDir = "../resources";
-   float time;
-
 
 	if (argc >= 2)
 	{
@@ -623,29 +634,16 @@ int main(int argc, char **argv)
 	application->init(resourceDir);
 	application->initGeom(resourceDir);
 
-   time = (float)glfwGetTime();
 	// Loop until the user closes the window.
 	while (! glfwWindowShouldClose(windowManager->getHandle()))
 	{
 			// Render scene.
-         do{
-            application->update();
-			glfwPollEvents();
-           // std::cout<< "update\n";
-         }while (time > (float)glfwGetTime());
-         
-         glFinish();
 			application->render();
-
-         time = (float)glfwGetTime() + 0.1;
-         //std::cout << (float)glfwGetTime() << '\n';
-
-
 
 			// Swap front and back buffers.
 			glfwSwapBuffers(windowManager->getHandle());
 			// Poll for and process events.
-
+			glfwPollEvents();
 	}
 
 	// Quit program.

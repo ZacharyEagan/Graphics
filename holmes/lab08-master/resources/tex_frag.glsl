@@ -7,4 +7,5 @@ uniform sampler2D texBuf;
 /* just pass through the texture color we will add to this next lab */
 void main(){
    color = vec4(texture( texBuf, texCoord ).rgb, 1);
+  // color = vec4(1.f);
 }

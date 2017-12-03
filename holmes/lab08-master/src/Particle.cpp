@@ -30,8 +30,12 @@ void Particle::rebirth(float t)
 	m = 1.0f;
 	d = randFloat(0.0f, 0.02f);
 	x.x = randFloat(-20,20);
-	x.y = 20.f;
-	//x.z = randFloat(-3.f, -2.f);
+	x.y = randFloat(0.1f, 10.f);
+   //z = randFloat(3.f, 12.f);
+	x.z = randFloat(-20,20);
+   gd.x = randFloat(-0.001, 0.001);
+   gd.y = randFloat(-0.001, 0.001);
+   gd.z = randFloat(-0.001, 0.001);
    x.z = randFloat(-20,20);//
 	v.x = randFloat(-0.1f, 0.1f) * randFloat(-1.1f, 1.1f);
 	v.y = 0.3 + randFloat(-0.1f, 0.1f);
@@ -55,7 +59,7 @@ void Particle::update(float t, float h, const vec3 &g, const bool *keyToggles)
 
 	// very simple update
 	x += h * v;
-   v += g;
+   v += gd;
    v.x += sin(t/8) / 1000;
    v.y += cos(t/16) / 1000;
    v.z += (sin(t/8) * cos(t/16)) / 1000;

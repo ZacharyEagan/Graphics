@@ -44,6 +44,11 @@ private:
 public:
    void init(std::string model);
    void init(std::string model, std::string text, bool wrap);
+   void init(std::string model, std::shared_ptr<Program> progi);
+   void init(std::string model, std::string text, bool wrap, std:: shared_ptr<Program> progi);
+   std::shared_ptr<Program> get_prog();
+   void set_prog(std::shared_ptr<Program> progi);
+
    void set_lower(glm::vec3 bound);
    void set_upper(glm::vec3 bound);
    void set_color(int col);
@@ -68,3 +73,5 @@ public:
    void update(double dt);
    void draw(glm::mat4 P, glm::mat4 V, glm::vec3 LP);
 };
+
+std::shared_ptr<Program> init_prog(std::string frag, std::string vert);

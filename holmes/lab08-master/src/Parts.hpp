@@ -33,7 +33,7 @@ float t = 0.0;
 float h = 0.01;
 double camRot = 0.0;
 glm::vec3 g = glm::vec3(0.0,-0.01f,0.0);
-int numP = 300;
+int numP = 100;
 
 
    // Contains vertex information for OpenGL
@@ -47,6 +47,6 @@ public:
    void initGeom();
    void updateGeom();
    void updateParticles();
-   void draw(std::shared_ptr<MatrixStack> MV, std::shared_ptr<MatrixStack> P, glm::mat4 V);
+   void draw(glm::mat4 MV, std::shared_ptr<MatrixStack> P, glm::mat4 V);
 
 };

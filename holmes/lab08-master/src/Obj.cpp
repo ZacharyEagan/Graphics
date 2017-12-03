@@ -37,6 +37,21 @@ void Obj::init(std::string model)
    shape->init();
 }
 
+
+void Obj::init(std::string model, std::shared_ptr<Program> progi)
+{
+   prog = progi;
+   shape = std::make_shared<Shape>();
+   shape->loadMesh(model);
+   shape->measure();
+   shape->resize();
+   shape->init();
+}
+
+
+
+
+
 void Obj::init(std::string model, std::string tex, bool wrap)
 {
     prog->setVerbose(true);
@@ -82,6 +97,39 @@ void Obj::init(std::string model, std::string tex, bool wrap)
    shape->resize();
    shape->init();
 }
+
+
+void Obj::init(std::string model, std::string tex, bool wrap, std::shared_ptr<Program> progi)
+{
+   prog = progi;
+
+   texture = std::make_shared<Texture>();
+   texture->setFilename(tex);
+   texture->init();
+   texture->setUnit(0.002);
+   if (wrap)
+      texture->setWrapModes(GL_REPEAT, GL_REPEAT);
+   else
+      texture->setWrapModes(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
+   Tex = true;
+
+   shape = std::make_shared<Shape>();
+   shape->loadMesh(model);
+   shape->measure();
+   shape->resize();
+   shape->init();
+}
+
+std::shared_ptr<Program> Obj::get_prog()
+{
+   return prog;
+}
+void Obj::set_prog(std::shared_ptr<Program> progi)
+{
+   prog = progi;
+}
+
+
 //void Obj::set_lower(gl::vec3 bound)
 //void set_upper(gl::vec3 bound);
 void Obj::set_color(int col)
@@ -166,16 +214,16 @@ void Obj::draw(glm::mat4 P, glm::mat4 V, glm::vec3 VP)
                             value_ptr(v));
       glUniform3fv(prog->getUniform("VP"), 1, value_ptr(VP));
 
-      GLfloat lc[12] = {1.f,1.f,1.f, 1.f,1.f,1.f, 
-                             1.f,1.f,1.f, 1.f,1.f,1.f} ;
+//      GLfloat lc[12] = {1.f,1.f,1.f, 1.f,1.f,1.f, 
+  //                           1.f,1.f,1.f, 1.f,1.f,1.f} ;
       glUniform3fv(prog->getUniform("LC"), ars, &(bulbC.front()));
 //      glUniform3fv(prog->getUniform("LC"), 4, lc);
     //  glUniform3f(prog->getUniform("LC"),
      //                            1.f,
       //                           1.f,
        //                          1.f);
-      GLfloat lp[12] = {2.f,2.f,2.f, 2.f,2.f,2.f, 
-                             2.f,2.f,2.f, 2.f,2.f,2.f} ;
+    //  GLfloat lp[12] = {2.f,2.f,2.f, 2.f,2.f,2.f, 
+    //                         2.f,2.f,2.f, 2.f,2.f,2.f} ;
       glUniform3fv(prog->getUniform("LP"), ars, &(bulbP.front()));
 //      glUniform3fv(prog->getUniform("LP"), 4, lp);
       //glUniform3f(prog->getUniform("LP"), 1.f , 1.f , 1.f );
@@ -298,7 +346,6 @@ void Obj::set_light(glm::vec3 lght)
 void Obj::set_lights(std::vector<std::shared_ptr<Obj>> lights)
 {
 
-   double min = 0;
    double cur = 0;
    int count = 0;
    glm::vec3 lp,lc;
@@ -380,4 +427,38 @@ void Obj::bind()
 void Obj::unbind()
 {
    prog->unbind();
-}  
+}
+
+
+std::shared_ptr<Program> init_prog(std::string frag, std::string vert)
+{
+   std::shared_ptr<Program> prog = std::make_shared<Program>();
+    prog->setVerbose(true);
+    prog->setShaderNames(
+        frag,
+        vert);
+    if (! prog->init())
+    {
+      std::cerr << "One or more shaders failed to compile... exiting!" << std::endl;
+      exit(1);
+   }
+   prog->addUniform("P");
+   prog->addUniform("V");           //new1
+   prog->addUniform("MV");
+   prog->addUniform("VP");
+   prog->addUniform("nLights");
+   prog->addUniform("MatAmb");
+   prog->addUniform("MatDif");
+   prog->addUniform("MatSpec");
+   prog->addUniform("shine");
+   prog->addUniform("alpha");
+   prog->addUniform("LC");
+   prog->addUniform("LP");
+   prog->addUniform("Texture0");
+   prog->addAttribute("vertPos");
+   prog->addAttribute("vertNor");
+   prog->addAttribute("vertTex");
+
+   return prog;
+}
+  

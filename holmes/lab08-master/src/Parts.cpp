@@ -163,10 +163,10 @@ using namespace glm;
       std::sort(particles.begin(), particles.end(), sorter);
       //std::cout << "update particles s\n";
    }
-   void Parts::draw(std::shared_ptr<MatrixStack> MV, std::shared_ptr<MatrixStack> P, glm::mat4 V)
+   void Parts::draw(glm::mat4 MV, std::shared_ptr<MatrixStack> P, glm::mat4 V)
    {
-      MV->pushMatrix();
-      MV->translate(vec3(0.0,20.f,0.f));
+     // MV->pushMatrix();
+     // MV->translate(vec3(0.0,0.f,0.f));
       P->pushMatrix();
       P->multMatrix(V); 
 
@@ -176,7 +176,7 @@ using namespace glm;
 
       texture->bind(prog->getUniform("alphaTexture"));
       CHECKED_GL_CALL(glUniformMatrix4fv(prog->getUniform("P"), 1, GL_FALSE, value_ptr(P->topMatrix())));
-      CHECKED_GL_CALL(glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE, value_ptr(MV->topMatrix())));
+      CHECKED_GL_CALL(glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE, value_ptr(MV)));
 
       CHECKED_GL_CALL(glEnableVertexAttribArray(0));
       CHECKED_GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, pointsbuffer));
@@ -198,7 +198,6 @@ using namespace glm;
       prog->unbind();
 
       // Pop matrix stacks.
-      MV->popMatrix();
 
       P->popMatrix();
    }
